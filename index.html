@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+<head>
+  <title>Reactor Planner</title>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="styles.css" type="text/css">
+
+  <script src="common.js"></script>
+  <script src="reactorTiles.js"></script>
+
+  <script src="nuclear/utils.js"></script>
+
+  <script src="nuclear/INeutronBehaviour.js"></script>
+  <script src="nuclear/NuclearConstant.js"></script>
+
+  <script src="nuclear/INuclearComponent.js"></script>
+  <script src="nuclear/FluidNuclearComponent.js"></script>
+  <script src="nuclear/NuclearComponentItem.js"></script>
+  <script src="nuclear/NuclearAbsorbable.js"></script>
+
+  <script src="nuclear/IsotopeFuelParams.js"></script>
+  <script src="nuclear/NuclearFuel.js"></script>
+
+  <script src="nuclear/NuclearGridHelper.js"></script>
+  <script src="nuclear/NuclearGrid.js"></script>
+
+  <script src="nuclear/TemperatureComponent.js"></script>
+  <script src="nuclear/INuclearTileData.js"></script>
+  <script src="nuclear/INuclearTile.js"></script>
+
+  <script src="nuclear/HistoryComponent.js"></script>
+</head>
+<body>
+
+<header class="main-header">
+  <h1>Reactor Planner</h1>
+</header>
+
+<div class="main-wrapper">
+  <select name="sizes" id="reactor-size-select">
+    <option value="0">Small</option>
+    <option value="1">Medium</option>
+    <option value="2">Large</option>
+    <option value="3">Extreme</option>
+  </select>
+  <select name="overlay" id="reactor-overlay-select">
+    <option value="1">Temperature</option>
+    <option value="2">Neutron Absorbtion</option>
+    <option value="3">Neutron Flux</option>
+    <option value="4">Neutron Generation</option>
+    <option value="5">EU Generation</option>
+  </select>
+  <canvas id="reactor" width="704" height="704"></canvas>
+  <canvas id="reactorTooltip"></canvas>
+  <canvas id="materials" width="704" height="36"></canvas>
+</div><!-- main wrapper -->
+
+</body>
+</html>
