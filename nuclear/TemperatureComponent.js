@@ -37,7 +37,30 @@ class SteamHeaterComponent extends TemperatureComponent {
         this.requiresContinuousOperation = requiresContinuousOperation;
     }
 
-    tick(fluidInputs, fluidOutputs) {
+    tick(fluidInputs) {
+        let totalEuProduced = 0;
+        switch(fluidInputs) {
+        case Fluids.WATER:
+            totalEuProduced = this.tryMakeSteam(Fluids.WATER, Fluids.STEAM, 1);
+            break
+        case Fluids.HEAVY_WATER:
+            totalEuProduced = this.tryMakeSteam(Fluids.HEAVY_WATER, Fluids.HEAVY_WATER_STEAM, 1);
+            break
+        case Fluids.HIGH_PRESSURE_WATER:
+            totalEuProduced = this.tryMakeSteam(Fluids.HIGH_PRESSURE_WATER, Fluids.HIGH_PRESSURE_STEAM, 8);
+            break
+        case Fluids.HIGH_PRESSURE_HEAVY_WATER:
+            totalEuProduced = this.tryMakeSteam(Fluids.HIGH_PRESSURE_HEAVY_WATER, Fluids.HIGH_PRESSURE_HEAVY_WATER_STEAM, 8);
+            break
+        }
+
+        if (this.requiresContinuousOperation) {
+            this.decreaseTemperature(INPUT_ENERGY_RATIO_FOR_STARTUP * (this.maxEuProduction - totalEuProduced) / this.euPerDegree);
+        }
+
+        return totalEuProduced;
+
+        /*
         let euProducedLowPressure = 0;
         if (this.acceptLowPressure) {
             euProducedLowPressure = this.tryMakeSteam(Fluids.WATER, Fluids.STEAM, 1);
@@ -59,6 +82,7 @@ class SteamHeaterComponent extends TemperatureComponent {
         if (this.requiresContinuousOperation) {
             this.decreaseTemperature(INPUT_ENERGY_RATIO_FOR_STARTUP * (this.maxEuProduction - totalEuProduced) / this.euPerDegree);
         }
+        */
 
         return totalEuProduced;
     }
@@ -70,8 +94,8 @@ class SteamHeaterComponent extends TemperatureComponent {
             if (steamProduction > 0) {
                 const waterToUse = Math.ceil(steamProduction / SteamHeaterComponent.STEAM_TO_WATER);
 
-                // Produce steam
-                // steamProduction
+                Simulator.productionHistory.registerProduction(steam, steamProduction);
+                //Simulator.productionHistory.registerConsumption(water, waterToUse);
 
                 const euProduced = steamProduction * euPerSteamMb;
                 this.decreaseTemperature(euProduced / this.euPerDegree);

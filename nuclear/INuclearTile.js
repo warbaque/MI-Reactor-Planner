@@ -40,9 +40,8 @@ class NuclearHatch extends INuclearTile {
             if (this.component instanceof NuclearAbsorbable) {
                 const abs = this.component;
                 if (abs.getNeutronProduct() != null) {
-                    // TODO
-                    // abs.getNeutronProduct()
-                    // abs.getNeutronProductAmount()
+                    // console.log(abs.getNeutronProduct());
+                    // console.log(abs.getNeutronProductAmount());
                 }
             }
         }
@@ -165,17 +164,8 @@ class NuclearHatch extends INuclearTile {
             }
 
             if (simul || actualRecipe > 0) {
-                /*
-                extracted = this.inventory.fluidStorage.extractAllSlot(component.getVariant(), actualRecipe, tx,
-                            AbstractConfigurableStack::canPipesInsert);
-                    this.inventory.fluidStorage.insert(component.getNeutronProduct(), extracted * component.getNeutronProductAmount(), tx,
-                            AbstractConfigurableStack::canPipesExtract, true);
-
-                    if (!simul) {
-                        tx.commit();
-                    }
-                }
-                */
+                Simulator.productionHistory.registerProduction(component.getNeutronProduct(), component.getNeutronProductAmount());
+                Simulator.productionHistory.registerConsumption(component.getVariant(), actualRecipe);
             }
         }
     }
@@ -197,7 +187,7 @@ class NuclearHatch extends INuclearTile {
         this.fluidNeutronProductTick(randIntFromDouble(this.neutronHistory.getAverageReceived(NeutronType.BOTH)), false);
 
         if (this.isFluid) {
-            const euProduced = this.nuclearReactorComponent.tick();
+            const euProduced = this.nuclearReactorComponent.tick(this.component.getVariant());
             efficiencyHistory.registerEuProduction(euProduced);
         }
 

@@ -119,12 +119,12 @@ window.onload = function () {
     let reactorCanvas = document.getElementById('reactor');
     reactorCanvas.addEventListener('click', (event) => Game.clickReactor(event));
     Game.ctx = reactorCanvas.getContext('2d');
+    Game.ctx.font = "10pt Source Code Pro, Courier, monospace";
     Game.ctx.imageSmoothingEnabled = false;
 
     Game.tooltipCanvas = document.getElementById('reactorTooltip');
     reactorCanvas.addEventListener('mousemove', (event) => Game.hoverReactor(event));
     Game.tooltipCtx = Game.tooltipCanvas.getContext('2d');
-
     Game.tooltipCanvas.width = 250;
     Game.tooltipCanvas.height = 210;
     Game.tooltipCtx.font = "10pt Source Code Pro, Courier, monospace";
@@ -134,6 +134,13 @@ window.onload = function () {
     materialsCanvas.addEventListener('click', (event) => Game.clickMaterials(event));
     Game.materials = materialsCanvas.getContext('2d');
     Game.materials.imageSmoothingEnabled = false;
+
+    Game.statisticsCanvas = document.getElementById('reactorStatistics');
+    Game.statistics = Game.statisticsCanvas.getContext('2d');
+    Game.statisticsCanvas.width = 704;
+    Game.statisticsCanvas.height = 200;
+    Game.statistics.font = "10pt Source Code Pro, Courier, monospace";
+    Game.statistics.imageSmoothingEnabled = false;
 
     Game.run();
 };

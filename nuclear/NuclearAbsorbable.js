@@ -1,6 +1,5 @@
 class NuclearAbsorbable extends NuclearComponentItem {
 
-    //1 ??? settings.component(MIComponents.REMAINING_DISINTEGRATIONS, desintegrationMax)
     constructor(item, maxTemperature, heatConduction, neutronBehaviour, desintegrationMax) {
         super(item, maxTemperature, heatConduction, neutronBehaviour);
         this.desintegrationMax = desintegrationMax;

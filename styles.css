@@ -63,11 +63,26 @@ li {
     margin: 0.5em 0;
 }
 
+#reactor {
+    position: relative;
+    margin: 5px 0 0 0;
+}
+
+#materials {
+    margin: 0;
+}
+
 #reactorTooltip {
     background-color: #000A;
     border: 1px solid purple;
     position: absolute;
     left: -20000px;
     top: -20000px;
+    pointer-events: none;
+}
+
+#reactorStatistics {
+    background-color: #000E;
+    border: 1px solid purple;
     pointer-events: none;
 }

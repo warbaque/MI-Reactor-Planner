@@ -112,3 +112,62 @@ class NuclearEfficiencyHistoryComponent extends IntegerHistoryComponent {
         this.addValue(NuclearEfficiencyHistoryComponentType.euProduction, eu);
     }
 }
+
+const NuclearProductionHistoryComponentType = Object.freeze({
+    waterConsumption: 0,
+    heavyWaterConsumption: 1,
+    highPressureWaterConsumption: 2,
+    highPressureHeavyWaterConsumption: 3,
+    steamProduction: 4,
+    heavyWaterSteamProduction: 5,
+    highPressureSteamProduction: 6,
+    highPressureHeavyWaterSteamProduction: 7,
+    deuteriumProduction: 8,
+    tritiumProduction: 9,
+})
+
+class NuclearProductionHistoryComponent extends IntegerHistoryComponent {
+    constructor() {
+        super(Object.keys(NuclearProductionHistoryComponentType), 300);
+    }
+
+    registerConsumption(type, mb) {
+        switch(type) {
+        case Fluids.WATER:
+            this.addValue(NuclearProductionHistoryComponentType.waterConsumption, mb);
+            break;
+        case Fluids.HEAVY_WATER:
+            this.addValue(NuclearProductionHistoryComponentType.heavyWaterConsumption, mb);
+            break;
+        case Fluids.HIGH_PRESSURE_WATER:
+            this.addValue(NuclearProductionHistoryComponentType.highPressureWaterConsumption, mb);
+            break;
+        case Fluids.HIGH_PRESSURE_HEAVY_WATER:
+            this.addValue(NuclearProductionHistoryComponentType.highPressureHeavyWaterConsumption, mb);
+            break;
+        }
+    }
+
+    registerProduction(type, mb) {
+        switch(type) {
+        case Fluids.STEAM:
+            this.addValue(NuclearProductionHistoryComponentType.steamProduction, mb);
+            break;
+        case Fluids.HEAVY_WATER_STEAM:
+            this.addValue(NuclearProductionHistoryComponentType.heavyWaterSteamProduction, mb);
+            break;
+        case Fluids.HIGH_PRESSURE_STEAM:
+            this.addValue(NuclearProductionHistoryComponentType.highPressureSteamProduction, mb);
+            break;
+        case Fluids.HIGH_PRESSURE_HEAVY_WATER_STEAM:
+            this.addValue(NuclearProductionHistoryComponentType.highPressureHeavyWaterSteamProduction, mb);
+            break;
+        case Fluids.DEUTERIUM:
+            this.addValue(NuclearProductionHistoryComponentType.deuteriumProduction, mb);
+            break;
+        case Fluids.TRITIUM:
+            this.addValue(NuclearProductionHistoryComponentType.tritiumProduction, mb);
+            break;
+        }
+    }
+}
