@@ -51,6 +51,10 @@ class NuclearHatch extends INuclearTile {
         return this.nuclearReactorComponent.getTemperature();
     }
 
+    getMaxTemperature() {
+        return this.component?.getMaxTemperature() || NuclearConstant.MAX_TEMPERATURE;
+    }
+
     getHeatTransferCoeff() {
         return Math.max(NuclearConstant.BASE_HEAT_CONDUCTION + (this.component?.getHeatConduction() || 0), 0);
     }
@@ -164,8 +168,10 @@ class NuclearHatch extends INuclearTile {
             }
 
             if (simul || actualRecipe > 0) {
-                Simulator.productionHistory.registerProduction(component.getNeutronProduct(), component.getNeutronProductAmount());
-                Simulator.productionHistory.registerConsumption(component.getVariant(), actualRecipe);
+                if (!simul) {
+                    Simulator.productionHistory.registerProduction(component.getNeutronProduct(), component.getNeutronProductAmount());
+                    Simulator.productionHistory.registerConsumption(component.getVariant(), actualRecipe);
+                }
             }
         }
     }

@@ -55,8 +55,8 @@ const NeutronType = Object.freeze({
 });
 
 const Items = Object.freeze({
-    INVAR: Symbol('INVAR'),
-    CARBON: Symbol('CARBON'),
+    INVAR_PLATE: Symbol('INVAR_PLATE'),
+    CARBON_PLATE: Symbol('CARBON_PLATE'),
     SMALL_HEAT_EXCHANGER: Symbol('SMALL_HEAT_EXCHANGER'),
     LARGE_HEAT_EXCHANGER: Symbol('LARGE_HEAT_EXCHANGER'),
 });

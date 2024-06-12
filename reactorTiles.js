@@ -13,7 +13,7 @@ Simulator.init = function(map) {
     const hatchesGrid = new Array(map.size * map.size).fill(null);
     map.tiles.forEach((tile, i) => {
         const materialTile = Game.materialTiles[tile];
-        if (materialTile?.component) {
+        if (materialTile?.component || materialTile?.type === Blocks.HATCH) {
             hatchesGrid[i] = new NuclearHatch(materialTile.component);
         }
     });
@@ -25,7 +25,7 @@ Simulator.init = function(map) {
 Simulator.update = function() {
     this.nuclearGrid.hatchesGrid.forEach((hatch) => {
         if (hatch != null) {
-            //hatch.tick();
+            hatch.tick();
         }
     })
     NuclearGridHelper.simulate(this.nuclearGrid, this.efficiencyHistory);
@@ -67,12 +67,11 @@ TileMap = (i, tiles = null) => {
             if (tile == null || oldTile == null) {
                 return;
             }
-            console.log(tile)
             const newTile = (oldTile === tile) ? Tile.HATCH : tile;
             if (newTile != oldTile) {
                 this.tiles[row * map.size + col] = newTile;
                 Simulator.init(map);
-                window.history.replaceState({}, "", `?i=${i}&state=${btoa(JSON.stringify(this.tiles))}`);
+                window.history.pushState(null, null, `?i=${i}&state=${btoa(JSON.stringify(this.tiles))}`);
             }
         },
     };
@@ -94,13 +93,16 @@ TileMap = (i, tiles = null) => {
                 }
             }
         }
-        window.history.replaceState({}, "", `?i=${i}`);
+        window.history.pushState(null, null, `?i=${i}`);
     }
 
     Simulator.init(map);
     return map;
 }
 
+window.addEventListener("popstate", (event) => {
+    Game.init();
+});
 
 Game.load = function () {
     const assets = [
@@ -119,8 +121,8 @@ Game.load = function () {
 
         [Items.SMALL_HEAT_EXCHANGER, 'assets/item/small_heat_exchanger.png'],
         [Items.LARGE_HEAT_EXCHANGER, 'assets/item/large_heat_exchanger.png'],
-        [Items.INVAR,                'assets/item/invar_large_plate.png'],
-        [Items.CARBON,               'assets/item/carbon_large_plate.png'],
+        [Items.INVAR_PLATE,          'assets/item/invar_large_plate.png'],
+        [Items.CARBON_PLATE,         'assets/item/carbon_large_plate.png'],
 
         [Fluids.WATER,                     'assets/fluid/water_still.png'],
         [Fluids.HEAVY_WATER,               'assets/fluid/heavy_water_still.png'],
@@ -258,45 +260,46 @@ Game._drawReactor = function (fluidFrame) {
         for (let r = 0; r < this.map.size; r++) {
             let tile = this.map.getTile(c, r);
 
-            if (Number.isInteger(tile)) {
-                switch (tile) {
-                case Tile.CASING:
-                    this.ctx.fillStyle = CASING;
-                    break;
-                case Tile.HATCH:
-                    this.ctx.fillStyle = HATCH;
-                    break;
-                default:
-                    this.ctx.fillStyle = HATCH;
-                }
+            if (tile == null) {
+                continue;
+            }
 
-                this.ctx.fillRect(c * this.map.tsize, r * this.map.tsize, this.map.tsize, this.map.tsize);
+            switch (tile) {
+            case Tile.CASING:
+                this.ctx.fillStyle = CASING;
+                break;
+            default:
+                this.ctx.fillStyle = HATCH;
+            }
 
-                let material = this.materialTiles[tile];
+            this.ctx.fillRect(c * this.map.tsize, r * this.map.tsize, this.map.tsize, this.map.tsize);
 
-                if (material && material.image !== null){
-                    let fluidAnimation = material.isFluid
-                        ? [0, 16 * fluidFrame, 16, 16]
-                        : []
-                    this.ctx.drawImage(
-                        material.image,
-                        ...fluidAnimation,
-                        c * this.map.tsize,
-                        r * this.map.tsize,
-                        this.map.tsize,
-                        this.map.tsize
-                    );
+            let material = this.materialTiles[tile];
 
-                    const [u, v] = overlayColor(c, r);
-                    this.ctx.drawImage(
-                        this.colorbar,
-                        u, v, 1, 1,
-                        c * this.map.tsize,
-                        r * this.map.tsize,
-                        this.map.tsize,
-                        this.map.tsize
-                    );
-                }
+            if (material?.image != null){
+                let fluidAnimation = material.isFluid
+                    ? [0, 16 * fluidFrame, 16, 16]
+                    : []
+                this.ctx.drawImage(
+                    material.image,
+                    ...fluidAnimation,
+                    c * this.map.tsize,
+                    r * this.map.tsize,
+                    this.map.tsize,
+                    this.map.tsize
+                );
+            }
+
+            if (material && tile != Tile.CASING) {
+                const [u, v] = overlayColor(c, r);
+                this.ctx.drawImage(
+                    this.colorbar,
+                    u, v, 1, 1,
+                    c * this.map.tsize,
+                    r * this.map.tsize,
+                    this.map.tsize,
+                    this.map.tsize
+                );
             }
         }
     }
@@ -327,7 +330,7 @@ Game._drawReactor = function (fluidFrame) {
         }
 
         tooltipLine(`Temperature         ${tooltipTile.getTemperature().toFixed(1)}`, '#ffffff');
-        tooltipLine(`    Max Temperature ${clamp(tooltipTile.component.getMaxTemperature())}`, '#fcfc54');
+        tooltipLine(`    Max Temperature ${clamp(tooltipTile.getMaxTemperature())}`, '#fcfc54');
         tooltipLine(`Neutron Absorbtion  ${tooltipTile.getMeanNeutronAbsorption(NeutronType.BOTH).toFixed(1)}`, '#ffffff');
         tooltipLine(`    Fast Neutron    ${tooltipTile.getMeanNeutronAbsorption(NeutronType.FAST).toFixed(1)}`, '#a7a7a7');
         tooltipLine(`    Thermal Neutron ${tooltipTile.getMeanNeutronAbsorption(NeutronType.THERMAL).toFixed(1)}`, '#a7a7a7');
@@ -369,9 +372,6 @@ Game._drawTileSelector = function (fluidFrame) {
 
     this.materialTiles.forEach((material, i) => {
         switch (material.type) {
-        case Blocks.CASING:
-            this.materials.fillStyle = CASING;
-            break;
         case Blocks.HATCH:
             this.materials.fillStyle = HATCH;
             break;
