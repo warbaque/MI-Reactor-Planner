@@ -31,6 +31,7 @@ NuclearComponent.register(new NuclearComponentItem(
     15 * NuclearConstant.BASE_HEAT_CONDUCTION,
     INeutronBehaviour.NO_INTERACTION
 ));
+
 NuclearComponent.register(new NuclearComponentItem(
     Items.LARGE_HEAT_EXCHANGER,
     1800,

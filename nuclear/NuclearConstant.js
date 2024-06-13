@@ -74,19 +74,17 @@ const Fluids = Object.freeze({
     TRITIUM: Symbol('TRITIUM'),
 });
 
-const FuelConstants = () => {
-    const out1 = {}
-    const out2 = {}
+const [Fuels, FuelData] = (() => {
+    const keys = {};
+    const data = [];
     const rod = (key, isotope, size) => {
-        out1[key] = Object.freeze({key: Symbol(key), isotope: isotope, size: size, depleted: isotope +'_DEPLETED'});
-        out2[key] = out1[key].key;
+        keys[key] = Symbol(key);
+        data.push(Object.freeze({key: keys[key], isotope: isotope, size: size, depleted: isotope +'_DEPLETED'}));
     }
     ['URANIUM', 'LE_MOX', 'LE_URANIUM'].forEach((type) => {
         rod(type + '_1', type, 1);
         rod(type + '_2', type, 2);
         rod(type + '_4', type, 4);
     })
-    return [Object.freeze(out1), Object.freeze(out2)];
-}
-
-const [FuelType, Fuels] = FuelConstants();
+    return [Object.freeze(keys), data];
+})();

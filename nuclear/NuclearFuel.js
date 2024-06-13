@@ -64,11 +64,14 @@ class NuclearFuel extends NuclearAbsorbable {
         const absorption = this.simulateAbsorption(neutronsReceived);
         const fuelEuConsumed = absorption * this.totalEUbyDesintegration;
         efficiencyHistory.registerEuFuelConsumption(fuelEuConsumed);
+
+        Simulator.productionHistory.registerConsumption(this.getVariant(), this.size * absorption / this.desintegrationMax);
+
         return randIntFromDouble(this.efficiencyFactor(temperature) * absorption * this.neutronMultiplicationFactor);
     }
 }
 
-Object.values(FuelType).forEach((type) => {
+FuelData.forEach(type => {
     const params = FuelIsotopes[type.isotope];
     const fuelParams = new NuclearFuelParams(
         NuclearConstant.DESINTEGRATION_BY_ROD * type.size,

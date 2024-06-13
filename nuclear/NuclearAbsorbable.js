@@ -6,8 +6,6 @@ class NuclearAbsorbable extends NuclearComponentItem {
     }
 
     simulateAbsorption(neutronsReceived) {
-        // TODO
-        // console.log(neutronsReceived / this.desintegrationMax);
         return randIntFromDouble(neutronsReceived);
     }
 }

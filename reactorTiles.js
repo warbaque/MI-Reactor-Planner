@@ -217,7 +217,7 @@ const overlayColor = (x, y) => {
     case Overlay.TEMPERATURE:
         return [Math.floor(299 * tileData.getTemperature() / NuclearConstant.MAX_TEMPERATURE), 30];
     case Overlay.EU_GENERATION:
-        return [Math.floor(299 * tileData.getMeanEuGeneration() / (2 * NuclearConstant.MAX_HATCH_EU_PRODUCTION)), 30];
+        return [Math.floor(299 * Math.min(1.0, tileData.getMeanEuGeneration() / (2 * NuclearConstant.MAX_HATCH_EU_PRODUCTION))), 30];
     case Overlay.NEUTRON_ABSORPTION:
         neutronRate = 5 * tileData.getMeanNeutronAbsorption(NeutronType.BOTH);
         return [Math.floor(299 * neutronColorScheme(2 * neutronRate)), 0];
@@ -232,7 +232,7 @@ const overlayColor = (x, y) => {
     return [0, 0];
 };
 
-const textWriter = function (ctx) {
+const textWriter = function (ctx, offsetX = 0, offsetY = 0) {
     this.lineIndex = 0;
     this.call = function() {
         assert(arguments.length % 2 === 0);
@@ -242,14 +242,32 @@ const textWriter = function (ctx) {
             ctx.fillStyle = color;
             ctx.fillText(
                 text,
-                10 + length,
-                20 + this.lineIndex * 20,
+                10 + length + offsetX,
+                20 + this.lineIndex * 20 + offsetY,
             );
             length += ctx.measureText(text).width;
         }
         ++this.lineIndex;
     };
     return this.call.bind(this);
+};
+
+const UI = {};
+
+UI.format = (x, suffix='') => {
+  const lookup = [
+    [ 1, ""],
+    [ 1e3, "k"],
+    [ 1e6, "M"],
+    [ 1e9, "G"],
+    [ 1e12, "T"],
+    [ 1e15, "P"],
+    [ 1e18, "E"],
+  ];
+  const [value, symbol] = lookup.findLast(([value]) => x >= value) || lookup[0];
+  const v = x / value;
+  const digits = 3 - Math.floor(Math.log10(Math.max(1, v)));
+  return `${(v).toFixed(digits)}${symbol}${suffix}`;
 };
 
 Game._drawReactor = function (fluidFrame) {
@@ -344,25 +362,9 @@ Game._drawReactor = function (fluidFrame) {
     const euProduction = Simulator.efficiencyHistory.getAverage(NuclearEfficiencyHistoryComponentType.euProduction);
     const euFuelConsumption = Simulator.efficiencyHistory.getAverage(NuclearEfficiencyHistoryComponentType.euFuelConsumption);
 
-    const format = (eu) => {
-      const lookup = [
-        [ 1, ""],
-        [ 1e3, "k"],
-        [ 1e6, "M"],
-        [ 1e9, "G"],
-        [ 1e12, "T"],
-        [ 1e15, "P"],
-        [ 1e18, "E"],
-      ];
-      const [value, symbol] = lookup.findLast(([value]) => eu >= value) || lookup[0];
-      const v = eu / value;
-      const digits = 3 - Math.floor(Math.log10(Math.max(1, v)));
-      return `${(v).toFixed(digits)}${symbol} EU/t `;
-    };
-
     const infoLine = new textWriter(this.ctx);
-    infoLine(format(euProduction), '#fcdb7c', 'produced for', '#ffffff');
-    infoLine(format(euFuelConsumption), '#fcdb7c', 'of fuel consumed', '#ffffff');
+    infoLine(UI.format(euProduction, ' EU/t '), '#fcdb7c', 'produced for', '#ffffff');
+    infoLine(UI.format(euFuelConsumption, ' EU/t '), '#fcdb7c', 'of fuel consumed', '#ffffff');
     infoLine(`Efficiency ${(100 * euProduction / euFuelConsumption).toFixed(1)} %`, '#fc5454');
 };
 
@@ -411,9 +413,6 @@ Game._drawTileSelector = function (fluidFrame) {
 };
 
 Game._drawReactorStatistics = function (fluidFrame) {
-    this.statistics.clearRect(0, 0, this.statisticsCanvas.width, this.statisticsCanvas.height);
-    const infoLine = new textWriter(this.statistics);
-
     const waterConsumption = Simulator.productionHistory.getAverage(NuclearProductionHistoryComponentType.waterConsumption);
     const heavyWaterConsumption = Simulator.productionHistory.getAverage(NuclearProductionHistoryComponentType.heavyWaterConsumption);
     const highPressureWaterConsumption = Simulator.productionHistory.getAverage(NuclearProductionHistoryComponentType.highPressureWaterConsumption);
@@ -426,25 +425,64 @@ Game._drawReactorStatistics = function (fluidFrame) {
     const deuteriumProduction = Simulator.productionHistory.getAverage(NuclearProductionHistoryComponentType.deuteriumProduction);
     const tritiumProduction = Simulator.productionHistory.getAverage(NuclearProductionHistoryComponentType.tritiumProduction);
 
-    const insertNonZero = (prefix, value)  => {
+    const uraniumRodConsumption = Simulator.productionHistory.getAverage(NuclearProductionHistoryComponentType.uraniumRodConsumption);
+    const leMoxRodConsumption = Simulator.productionHistory.getAverage(NuclearProductionHistoryComponentType.leMoxRodConsumption);
+    const leUraniumRodConsumption = Simulator.productionHistory.getAverage(NuclearProductionHistoryComponentType.leUraniumRodConsumption);
+
+    this.statistics.clearRect(0, 0, this.statisticsCanvas.width, this.statisticsCanvas.height);
+
+    const fluids = new textWriter(this.statistics);
+    const addFluid = (prefix, value)  => {
         if (value > 0) {
-            infoLine(`${prefix}${value.toFixed(1)}`, '#fff');
+            fluids(`${prefix}${UI.format(value, ' mb/t')}`, '#fff');
         }
     };
 
-    infoLine('INPUT', '#fcfc54');
-    insertNonZero('    Water                 ', waterConsumption, '#fff');
-    insertNonZero('    Heavy Water           ', heavyWaterConsumption, '#fff');
-    insertNonZero('    HP Water              ', highPressureWaterConsumption, '#fff');
-    insertNonZero('    HP Heavy Water        ', highPressureHeavyWaterConsumption, '#fff');
+    const rods = new textWriter(this.statistics, this.statisticsCanvas.width / 2);
+    const addRod = (prefix, value)  => {
+        if (value !== 0) {
+            let suffix = 't';
+            [
+                [20, 's'],
+                [60, 'min'],
+                [60, 'h'],
+                [24, 'day'],
+            ].forEach(([mul, suf]) => {
+                if (Math.abs(value) < 1) {
+                    value *= mul;
+                    suffix = suf;
+                }
+            });
+            rods(`${prefix}${value<0?'':' '}${value.toFixed(1)} / ${suffix}`, '#fff');
+        }
+    };
 
-    infoLine('OUTPUT', '#fcfc54');
-    insertNonZero('    Steam                 ', steamProduction, '#fff');
-    insertNonZero('    Heavy Water Steam     ', heavyWaterSteamProduction, '#fff');
-    insertNonZero('    HP Water Steam        ', highPressureSteamProduction, '#fff');
-    insertNonZero('    HP Heavy Water Steam  ', highPressureHeavyWaterSteamProduction, '#fff');
-    insertNonZero('    Deuterium             ', deuteriumProduction, '#fff');
-    insertNonZero('    Tritium               ', tritiumProduction, '#fff');
+    fluids('INPUT', '#fcfc54');
+    addFluid('  Water                ', waterConsumption);
+    addFluid('  Heavy Water          ', heavyWaterConsumption);
+    addFluid('  HP Water             ', highPressureWaterConsumption);
+    addFluid('  HP Heavy Water       ', highPressureHeavyWaterConsumption);
+
+    fluids('OUTPUT', '#fcfc54');
+    addFluid('  Steam                ', steamProduction);
+    addFluid('  Heavy Water Steam    ', heavyWaterSteamProduction);
+    addFluid('  HP Water Steam       ', highPressureSteamProduction);
+    addFluid('  HP Heavy Water Steam ', highPressureHeavyWaterSteamProduction);
+    addFluid('  Deuterium            ', deuteriumProduction);
+    addFluid('  Tritium              ', tritiumProduction);
+
+    const isotopeNet = (fromUranium, fromLeMox, fromLeUranium) => {
+        return (uraniumRodConsumption * fromUranium + leMoxRodConsumption * fromLeMox + leUraniumRodConsumption * fromLeUranium) / 9;
+    }
+
+    rods('ROD DEPLETION', '#fcfc54');
+    addRod('  Uranium                ', uraniumRodConsumption);
+    addRod('  LE Mox                 ', leMoxRodConsumption);
+    addRod('  LE Uranium             ', leUraniumRodConsumption);
+    rods('ISOTOPE NET', '#fcfc54');
+    addRod('  Uranium 235            ', isotopeNet(1, 0, -3));
+    addRod('  Uranium 238            ', isotopeNet(53, -24, -24));
+    addRod('  Plutonium              ', isotopeNet(27, 21, 24));
 };
 
 Game.render = function () {
