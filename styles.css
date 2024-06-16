@@ -27,6 +27,9 @@ body {
 
 #tileUi {
     position: relative;
+    width: 824px;
+    height: 920px;
+    margin: 2px 0;
 }
 
 .tile-canvas {

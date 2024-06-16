@@ -8,6 +8,7 @@ const Blocks = Object.freeze({
 });
 
 const Simulator = {};
+Simulator.speed = 1;
 
 Simulator.init = function(map) {
     const hatchesGrid = new Array(map.size * map.size).fill(null);
@@ -23,14 +24,16 @@ Simulator.init = function(map) {
 };
 
 Simulator.update = function() {
-    this.nuclearGrid.hatchesGrid.forEach((hatch) => {
-        if (hatch != null) {
-            hatch.tick();
-        }
-    })
-    NuclearGridHelper.simulate(this.nuclearGrid, this.efficiencyHistory);
-    this.efficiencyHistory.tick();
-    this.productionHistory.tick();
+    for (let i=0; i < this.speed; ++i) {
+        this.nuclearGrid.hatchesGrid.forEach((hatch) => {
+            if (hatch != null) {
+                hatch.tick();
+            }
+        })
+        NuclearGridHelper.simulate(this.nuclearGrid, this.efficiencyHistory);
+        this.efficiencyHistory.tick();
+        this.productionHistory.tick();
+    }
 };
 
 function Material (type) {
@@ -221,6 +224,12 @@ Game.init = function () {
         this.overlay = parseInt(selectOverlay.value);
     });
 
+    let simulatorSpeed = document.getElementById("simulator-speed-select");
+    this.overlay = Overlay.TEMPERATURE;
+    simulatorSpeed.addEventListener("change", () => {
+        Simulator.speed = parseInt(simulatorSpeed.value);
+    });
+
     this.clickMaterials = function (event) {
         let x = Math.floor(event.offsetX / 34);
         let y = Math.floor(event.offsetY / 34);
@@ -236,6 +245,11 @@ Game.init = function () {
 
     const clamp = (temp) => {
         return (temp < 2147483647) ? temp : '∞';
+    }
+
+    this.hoverOut = function (event) {
+        this.tooltipCanvas.style.left = "-2000px";
+        this._drawTooltip = () => {};
     }
 
     const reactorTileInfo = (tile) => {
@@ -270,8 +284,7 @@ Game.init = function () {
                 reactorTileInfo(tile);
             };
         } else {
-            this.tooltipCanvas.style.left = "-2000px"
-            this._drawTooltip = () => {};
+            this.hoverOut();
         }
     };
 
@@ -378,8 +391,7 @@ Game.init = function () {
                 materialTileInfo(tile);
             };
         } else {
-            this.tooltipCanvas.style.left = "-2000px"
-            this._drawTooltip = () => {};
+            this.hoverOut();
         }
     }
 

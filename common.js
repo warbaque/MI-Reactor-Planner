@@ -106,10 +106,11 @@ Game.tick = function (elapsed) {
 Game.init = function () {};
 Game.update = function (delta) {};
 Game.render = function () {};
-Game.clickReactor = function (event)    { };
-Game.clickMaterials = function (event)  { };
-Game.hoverReactor = function (event)    { };
-Game.hoverMaterials = function (event)  { };
+Game.clickReactor = function (event) {};
+Game.clickMaterials = function (event) {};
+Game.hoverReactor = function (event) {};
+Game.hoverMaterials = function (event) {};
+Game.hoverOut = function (event) {};
 
 //
 // start up function
@@ -119,6 +120,7 @@ window.onload = function () {
     Game.reactorCanvas = document.getElementById('reactor');
     Game.reactorCanvas.addEventListener('click', (event) => Game.clickReactor(event));
     Game.reactorCanvas.addEventListener('mousemove', (event) => Game.hoverReactor(event));
+    Game.reactorCanvas.addEventListener('mouseout', (event) => Game.hoverOut(event));
     Game.ctx = Game.reactorCanvas.getContext('2d');
     Game.ctx.font = "10pt Source Code Pro, Courier, monospace";
     Game.ctx.imageSmoothingEnabled = false;
@@ -126,6 +128,7 @@ window.onload = function () {
     Game.materialsCanvas = document.getElementById('materials');
     Game.materialsCanvas.addEventListener('click', (event) => Game.clickMaterials(event));
     Game.materialsCanvas.addEventListener('mousemove', (event) => Game.hoverMaterials(event));
+    Game.materialsCanvas.addEventListener('mouseout', (event) => Game.hoverOut(event));
     Game.materials = Game.materialsCanvas.getContext('2d');
     Game.materials.imageSmoothingEnabled = false;
 
