@@ -129,6 +129,9 @@ const NuclearProductionHistoryComponentType = Object.freeze(Object.fromEntries([
     'leUraniumRodConsumption',
     'heMoxRodConsumption',
     'heUraniumRodConsumption',
+    'invarPlateConsumption',
+    'carbonPlateConsumption',
+    'controlRodConsumption',
 ].map((type, i) => [type, i])));
 
 class NuclearProductionHistoryComponent extends IntegerHistoryComponent {
@@ -137,67 +140,48 @@ class NuclearProductionHistoryComponent extends IntegerHistoryComponent {
     }
 
     registerConsumption(type, amount) {
-        switch(type) {
-        case Fluids.WATER:
-            this.addValue(NuclearProductionHistoryComponentType.waterConsumption, amount);
-            break;
-        case Fluids.HEAVY_WATER:
-            this.addValue(NuclearProductionHistoryComponentType.heavyWaterConsumption, amount);
-            break;
-        case Fluids.HIGH_PRESSURE_WATER:
-            this.addValue(NuclearProductionHistoryComponentType.highPressureWaterConsumption, amount);
-            break;
-        case Fluids.HIGH_PRESSURE_HEAVY_WATER:
-            this.addValue(NuclearProductionHistoryComponentType.highPressureHeavyWaterConsumption, amount);
-            break;
-        case Fuels.URANIUM_1:
-        case Fuels.URANIUM_2:
-        case Fuels.URANIUM_4:
-            this.addValue(NuclearProductionHistoryComponentType.uraniumRodConsumption, amount);
-            break;
-        case Fuels.LE_MOX_1:
-        case Fuels.LE_MOX_2:
-        case Fuels.LE_MOX_4:
-            this.addValue(NuclearProductionHistoryComponentType.leMoxRodConsumption, amount);
-            break;
-        case Fuels.LE_URANIUM_1:
-        case Fuels.LE_URANIUM_2:
-        case Fuels.LE_URANIUM_4:
-            this.addValue(NuclearProductionHistoryComponentType.leUraniumRodConsumption, amount);
-            break;
-        case Fuels.HE_MOX_1:
-        case Fuels.HE_MOX_2:
-        case Fuels.HE_MOX_4:
-            this.addValue(NuclearProductionHistoryComponentType.heMoxRodConsumption, amount);
-            break;
-        case Fuels.HE_URANIUM_1:
-        case Fuels.HE_URANIUM_2:
-        case Fuels.HE_URANIUM_4:
-            this.addValue(NuclearProductionHistoryComponentType.heUraniumRodConsumption, amount);
-            break;
-        }
+        const historyComponent = (() => {
+            switch(type) {
+                case Fluids.WATER: return NuclearProductionHistoryComponentType.waterConsumption;
+                case Fluids.HEAVY_WATER: return NuclearProductionHistoryComponentType.heavyWaterConsumption;
+                case Fluids.HIGH_PRESSURE_WATER: return NuclearProductionHistoryComponentType.highPressureWaterConsumption;
+                case Fluids.HIGH_PRESSURE_HEAVY_WATER: return NuclearProductionHistoryComponentType.highPressureHeavyWaterConsumption;
+                case Fuels.URANIUM_1:
+                case Fuels.URANIUM_2:
+                case Fuels.URANIUM_4: return NuclearProductionHistoryComponentType.uraniumRodConsumption;
+                case Fuels.LE_MOX_1:
+                case Fuels.LE_MOX_2:
+                case Fuels.LE_MOX_4: return NuclearProductionHistoryComponentType.leMoxRodConsumption;
+                case Fuels.LE_URANIUM_1:
+                case Fuels.LE_URANIUM_2:
+                case Fuels.LE_URANIUM_4: return NuclearProductionHistoryComponentType.leUraniumRodConsumption;
+                case Fuels.HE_MOX_1:
+                case Fuels.HE_MOX_2:
+                case Fuels.HE_MOX_4: return NuclearProductionHistoryComponentType.heMoxRodConsumption;
+                case Fuels.HE_URANIUM_1:
+                case Fuels.HE_URANIUM_2:
+                case Fuels.HE_URANIUM_4: return NuclearProductionHistoryComponentType.heUraniumRodConsumption;
+                case Items.INVAR_PLATE: return NuclearProductionHistoryComponentType.invarPlateConsumption;
+                case Items.CARBON_PLATE: return NuclearProductionHistoryComponentType.carbonPlateConsumption;
+                case Items.CONTROL_ROD: return NuclearProductionHistoryComponentType.controlRodConsumption;
+            }
+        })();
+
+        this.addValue(historyComponent, amount);
     }
 
     registerProduction(type, amount) {
-        switch(type) {
-        case Fluids.STEAM:
-            this.addValue(NuclearProductionHistoryComponentType.steamProduction, amount);
-            break;
-        case Fluids.HEAVY_WATER_STEAM:
-            this.addValue(NuclearProductionHistoryComponentType.heavyWaterSteamProduction, amount);
-            break;
-        case Fluids.HIGH_PRESSURE_STEAM:
-            this.addValue(NuclearProductionHistoryComponentType.highPressureSteamProduction, amount);
-            break;
-        case Fluids.HIGH_PRESSURE_HEAVY_WATER_STEAM:
-            this.addValue(NuclearProductionHistoryComponentType.highPressureHeavyWaterSteamProduction, amount);
-            break;
-        case Fluids.DEUTERIUM:
-            this.addValue(NuclearProductionHistoryComponentType.deuteriumProduction, amount);
-            break;
-        case Fluids.TRITIUM:
-            this.addValue(NuclearProductionHistoryComponentType.tritiumProduction, amount);
-            break;
-        }
+        const historyComponent = (() => {
+            switch(type) {
+                case Fluids.STEAM: return NuclearProductionHistoryComponentType.steamProduction;
+                case Fluids.HEAVY_WATER_STEAM: return NuclearProductionHistoryComponentType.heavyWaterSteamProduction;
+                case Fluids.HIGH_PRESSURE_STEAM: return NuclearProductionHistoryComponentType.highPressureSteamProduction;
+                case Fluids.HIGH_PRESSURE_HEAVY_WATER_STEAM: return NuclearProductionHistoryComponentType.highPressureHeavyWaterSteamProduction;
+                case Fluids.DEUTERIUM: return NuclearProductionHistoryComponentType.deuteriumProduction;
+                case Fluids.TRITIUM: return NuclearProductionHistoryComponentType.tritiumProduction;
+            }
+        })();
+
+        this.addValue(historyComponent, amount);
     }
 }

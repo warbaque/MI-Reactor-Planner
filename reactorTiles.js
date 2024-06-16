@@ -602,6 +602,10 @@ Game._drawReactorStatistics = function (fluidFrame) {
     const heMoxRodConsumption = Simulator.productionHistory.getAverage(NuclearProductionHistoryComponentType.heMoxRodConsumption);
     const heUraniumRodConsumption = Simulator.productionHistory.getAverage(NuclearProductionHistoryComponentType.heUraniumRodConsumption);
 
+    const invarPlateConsumption = Simulator.productionHistory.getAverage(NuclearProductionHistoryComponentType.invarPlateConsumption);
+    const carbonPlateConsumption = Simulator.productionHistory.getAverage(NuclearProductionHistoryComponentType.carbonPlateConsumption);
+    const controlRodConsumption = Simulator.productionHistory.getAverage(NuclearProductionHistoryComponentType.controlRodConsumption);
+
     this.statistics.clearRect(0, 0, this.statisticsCanvas.width, this.statisticsCanvas.height);
 
     const fluids = new textWriter(this.statistics);
@@ -654,12 +658,15 @@ Game._drawReactorStatistics = function (fluidFrame) {
             ) / 9;
     }
 
-    rods('ROD DEPLETION', '#fcfc54');
-    addRod('  Uranium                ', uraniumRodConsumption);
-    addRod('  LE Mox                 ', leMoxRodConsumption);
-    addRod('  LE Uranium             ', leUraniumRodConsumption);
-    addRod('  HE Mox                 ', heMoxRodConsumption);
-    addRod('  HE Uranium             ', heUraniumRodConsumption);
+    rods('ITEM DEPLETION', '#fcfc54');
+    addRod('  Uranium Rod            ', uraniumRodConsumption);
+    addRod('  LE Mox Rod             ', leMoxRodConsumption);
+    addRod('  LE Uranium Rod         ', leUraniumRodConsumption);
+    addRod('  HE Mox Rod             ', heMoxRodConsumption);
+    addRod('  HE Uranium Rod         ', heUraniumRodConsumption);
+    addRod('  Control Rod            ', controlRodConsumption);
+    addRod('  Invar Plate            ', invarPlateConsumption);
+    addRod('  Carbon Plate           ', carbonPlateConsumption);
     rods('ISOTOPE NET', '#fcfc54');
     addRod('  Uranium 235            ', isotopeNet(1, 0, -3, 0, -9));
     addRod('  Uranium 238            ', isotopeNet(53, -24, -24, -18, -18));

@@ -3,10 +3,13 @@ class NuclearAbsorbable extends NuclearComponentItem {
     constructor(item, maxTemperature, heatConduction, neutronBehaviour, desintegrationMax) {
         super(item, maxTemperature, heatConduction, neutronBehaviour);
         this.desintegrationMax = desintegrationMax;
+        this.size = 1;
     }
 
     simulateAbsorption(neutronsReceived) {
-        return randIntFromDouble(neutronsReceived);
+        const absorption = randIntFromDouble(neutronsReceived);
+        Simulator.productionHistory.registerConsumption(this.getVariant(), this.size * absorption / this.desintegrationMax);
+        return absorption;
     }
 }
 

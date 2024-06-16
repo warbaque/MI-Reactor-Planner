@@ -65,8 +65,6 @@ class NuclearFuel extends NuclearAbsorbable {
         const fuelEuConsumed = absorption * this.totalEUbyDesintegration;
         efficiencyHistory.registerEuFuelConsumption(fuelEuConsumed);
 
-        Simulator.productionHistory.registerConsumption(this.getVariant(), this.size * absorption / this.desintegrationMax);
-
         return randIntFromDouble(this.efficiencyFactor(temperature) * absorption * this.neutronMultiplicationFactor);
     }
 }
