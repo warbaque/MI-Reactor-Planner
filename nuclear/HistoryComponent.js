@@ -127,6 +127,8 @@ const NuclearProductionHistoryComponentType = Object.freeze(Object.fromEntries([
     'uraniumRodConsumption',
     'leMoxRodConsumption',
     'leUraniumRodConsumption',
+    'heMoxRodConsumption',
+    'heUraniumRodConsumption',
 ].map((type, i) => [type, i])));
 
 class NuclearProductionHistoryComponent extends IntegerHistoryComponent {
@@ -162,6 +164,16 @@ class NuclearProductionHistoryComponent extends IntegerHistoryComponent {
         case Fuels.LE_URANIUM_2:
         case Fuels.LE_URANIUM_4:
             this.addValue(NuclearProductionHistoryComponentType.leUraniumRodConsumption, amount);
+            break;
+        case Fuels.HE_MOX_1:
+        case Fuels.HE_MOX_2:
+        case Fuels.HE_MOX_4:
+            this.addValue(NuclearProductionHistoryComponentType.heMoxRodConsumption, amount);
+            break;
+        case Fuels.HE_URANIUM_1:
+        case Fuels.HE_URANIUM_2:
+        case Fuels.HE_URANIUM_4:
+            this.addValue(NuclearProductionHistoryComponentType.heUraniumRodConsumption, amount);
             break;
         }
     }

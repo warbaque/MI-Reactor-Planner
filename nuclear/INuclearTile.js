@@ -51,10 +51,6 @@ class NuclearHatch extends INuclearTile {
         return this.nuclearReactorComponent.getTemperature();
     }
 
-    getMaxTemperature() {
-        return this.component?.getMaxTemperature() || NuclearConstant.MAX_TEMPERATURE;
-    }
-
     getHeatTransferCoeff() {
         return Math.max(NuclearConstant.BASE_HEAT_CONDUCTION + (this.component?.getHeatConduction() || 0), 0);
     }

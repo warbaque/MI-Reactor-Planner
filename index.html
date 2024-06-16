@@ -50,10 +50,12 @@
     <option value="4">Neutron Generation</option>
     <option value="5">EU Generation</option>
   </select>
-  <canvas id="reactor" width="704" height="704"></canvas>
-  <canvas id="reactorTooltip"></canvas>
-  <canvas id="materials" width="704" height="36"></canvas>
-  <canvas id="reactorStatistics"></canvas>
+  <div id="tileUi">
+    <canvas id="reactor" class="tile-canvas" width="704" height="704"></canvas>
+    <canvas id="materials" class="tile-canvas" width="104" height="704"></canvas>
+    <canvas id="reactorStatistics" class="tile-canvas" width="704"></canvas>
+    <canvas id="reactorTooltip" class="tile-canvas"></canvas>
+  </div>
 </div><!-- main wrapper -->
 
 </body>

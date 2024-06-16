@@ -6,6 +6,9 @@ class NuclearGrid {
     }
 
     getNuclearTile(x, y) {
+        if (x >= this.sizeX || y >= this.sizeY) {
+            return null;
+        }
         return this.hatchesGrid[x + y * this.sizeX];
     }
 

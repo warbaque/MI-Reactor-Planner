@@ -59,6 +59,7 @@ const Items = Object.freeze({
     CARBON_PLATE: Symbol('CARBON_PLATE'),
     SMALL_HEAT_EXCHANGER: Symbol('SMALL_HEAT_EXCHANGER'),
     LARGE_HEAT_EXCHANGER: Symbol('LARGE_HEAT_EXCHANGER'),
+    CONTROL_ROD: Symbol('CONTROL_ROD'),
 });
 
 const Fluids = Object.freeze({
@@ -81,7 +82,7 @@ const [Fuels, FuelData] = (() => {
         keys[key] = Symbol(key);
         data.push(Object.freeze({key: keys[key], isotope: isotope, size: size, depleted: isotope +'_DEPLETED'}));
     }
-    ['URANIUM', 'LE_MOX', 'LE_URANIUM'].forEach((type) => {
+    ['URANIUM', 'LE_MOX', 'LE_URANIUM', 'HE_MOX', 'HE_URANIUM'].forEach((type) => {
         rod(type + '_1', type, 1);
         rod(type + '_2', type, 2);
         rod(type + '_4', type, 4);

@@ -116,31 +116,27 @@ Game.hoverMaterials = function (event)  { };
 //
 
 window.onload = function () {
-    let reactorCanvas = document.getElementById('reactor');
-    reactorCanvas.addEventListener('click', (event) => Game.clickReactor(event));
-    Game.ctx = reactorCanvas.getContext('2d');
+    Game.reactorCanvas = document.getElementById('reactor');
+    Game.reactorCanvas.addEventListener('click', (event) => Game.clickReactor(event));
+    Game.reactorCanvas.addEventListener('mousemove', (event) => Game.hoverReactor(event));
+    Game.ctx = Game.reactorCanvas.getContext('2d');
     Game.ctx.font = "10pt Source Code Pro, Courier, monospace";
     Game.ctx.imageSmoothingEnabled = false;
 
-    Game.tooltipCanvas = document.getElementById('reactorTooltip');
-    reactorCanvas.addEventListener('mousemove', (event) => Game.hoverReactor(event));
-    Game.tooltipCtx = Game.tooltipCanvas.getContext('2d');
-    Game.tooltipCanvas.width = 250;
-    Game.tooltipCanvas.height = 210;
-    Game.tooltipCtx.font = "10pt Source Code Pro, Courier, monospace";
-    Game.tooltipCtx.imageSmoothingEnabled = false;
-
-    let materialsCanvas = document.getElementById('materials');
-    materialsCanvas.addEventListener('click', (event) => Game.clickMaterials(event));
-    Game.materials = materialsCanvas.getContext('2d');
+    Game.materialsCanvas = document.getElementById('materials');
+    Game.materialsCanvas.addEventListener('click', (event) => Game.clickMaterials(event));
+    Game.materialsCanvas.addEventListener('mousemove', (event) => Game.hoverMaterials(event));
+    Game.materials = Game.materialsCanvas.getContext('2d');
     Game.materials.imageSmoothingEnabled = false;
 
     Game.statisticsCanvas = document.getElementById('reactorStatistics');
     Game.statistics = Game.statisticsCanvas.getContext('2d');
-    Game.statisticsCanvas.width = 704;
+    Game.statisticsCanvas.width = Game.reactorCanvas.width;
     Game.statisticsCanvas.height = 200;
     Game.statistics.font = "10pt Source Code Pro, Courier, monospace";
-    Game.statistics.imageSmoothingEnabled = false;
+
+    Game.tooltipCanvas = document.getElementById('reactorTooltip');
+    Game.tooltipCtx = Game.tooltipCanvas.getContext('2d');
 
     Game.run();
 };
