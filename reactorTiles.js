@@ -190,6 +190,7 @@ Game.load = function () {
     return [
         ...assets.map(([type, asset]) => Loader.loadImage(type, asset)),
         Loader.loadImage('colorbar', 'assets/colorbar.png'),
+        Loader.loadImage('warning', 'assets/warning.png'),
     ];
 };
 
@@ -208,6 +209,7 @@ Game.init = function () {
     this.map = TileMap(sizeIndex, state);
 
     this.colorbar = Loader.getImage('colorbar');
+    this.warning = Loader.getImage('warning');
 
     let selectSize = document.getElementById("reactor-size-select");
     selectSize.selectedIndex = sizeIndex;
@@ -408,8 +410,7 @@ const neutronColorScheme = (neutronNumber) => {
     return Math.log(1 + 10 * neutronNumber) / Math.log(1 + 10 * neutronsMax);
 };
 
-const overlayColor = (x, y) => {
-    const tileData = Simulator.nuclearGrid.getNuclearTile(x, y);
+const overlayColor = (tileData) => {
     let neutronRate = 0;
 
     switch (Game.overlay) {
@@ -508,7 +509,9 @@ Game._drawReactor = function (fluidFrame) {
             }
 
             if (material && tile != Tile.CASING) {
-                const [u, v] = overlayColor(c, r);
+                const tileData = Simulator.nuclearGrid.getNuclearTile(c, r);
+
+                const [u, v] = overlayColor(tileData);
                 this.ctx.drawImage(
                     this.colorbar,
                     u, v, 1, 1,
@@ -517,6 +520,16 @@ Game._drawReactor = function (fluidFrame) {
                     this.map.tsize,
                     this.map.tsize
                 );
+
+                if (tileData.component && tileData.getTemperature() > tileData.component.getMaxTemperature()) {
+                    this.ctx.drawImage(
+                        this.warning,
+                        c * this.map.tsize,
+                        r * this.map.tsize,
+                        this.map.tsize,
+                        this.map.tsize
+                    );
+                };
             }
         }
     }

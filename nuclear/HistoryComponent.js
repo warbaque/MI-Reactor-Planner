@@ -136,7 +136,7 @@ const NuclearProductionHistoryComponentType = Object.freeze(Object.fromEntries([
 
 class NuclearProductionHistoryComponent extends IntegerHistoryComponent {
     constructor() {
-        super(Object.keys(NuclearProductionHistoryComponentType), 300);
+        super(Object.keys(NuclearProductionHistoryComponentType), 20 * 60);
     }
 
     registerConsumption(type, amount) {

@@ -165,8 +165,8 @@ class NuclearHatch extends INuclearTile {
 
             if (simul || actualRecipe > 0) {
                 if (!simul) {
-                    Simulator.productionHistory.registerProduction(component.getNeutronProduct(), component.getNeutronProductAmount());
                     Simulator.productionHistory.registerConsumption(component.getVariant(), actualRecipe);
+                    Simulator.productionHistory.registerProduction(component.getNeutronProduct(), actualRecipe * component.getNeutronProductAmount());
                 }
             }
         }
