@@ -9,6 +9,7 @@ const Blocks = Object.freeze({
 
 const Simulator = {};
 Simulator.speed = 1;
+Simulator.steamOutput = true;
 
 Simulator.init = function(map) {
     const hatchesGrid = new Array(map.size * map.size).fill(null);
@@ -211,7 +212,7 @@ Game.init = function () {
     this.colorbar = Loader.getImage('colorbar');
     this.warning = Loader.getImage('warning');
 
-    let selectSize = document.getElementById("reactor-size-select");
+    const selectSize = document.getElementById("reactor-size-select");
     selectSize.selectedIndex = sizeIndex;
     selectSize.addEventListener("change", () => {
         const value = parseInt(selectSize.value);
@@ -220,17 +221,22 @@ Game.init = function () {
         }
     });
 
-    let selectOverlay = document.getElementById("reactor-overlay-select");
+    const selectOverlay = document.getElementById("reactor-overlay-select");
     this.overlay = Overlay.TEMPERATURE;
     selectOverlay.addEventListener("change", () => {
         this.overlay = parseInt(selectOverlay.value);
     });
 
-    let simulatorSpeed = document.getElementById("simulator-speed-select");
-    this.overlay = Overlay.TEMPERATURE;
+    const simulatorSpeed = document.getElementById("simulator-speed-select");
     simulatorSpeed.addEventListener("change", () => {
         Simulator.speed = parseInt(simulatorSpeed.value);
     });
+
+    const steamOutput = document.getElementById("simulator-steam-output-toggle");
+    steamOutput.onclick = (event) => {
+        steamOutput.classList.toggle('off');
+        Simulator.steamOutput = !steamOutput.classList.contains('off');
+    };
 
     this.clickMaterials = function (event) {
         let x = Math.floor(event.offsetX / 34);

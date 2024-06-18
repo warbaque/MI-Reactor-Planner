@@ -25,11 +25,51 @@ body {
     padding: 0.5em 1em;
 }
 
+/*
+ * OPTIONS
+ */
+
+.simulator-options {
+    top: 0;
+    height: 19px;
+    vertical-align: top;
+}
+
+#simulator-steam-output-toggle {
+    display: inline-block;
+    position: relative;
+    width: 100px;
+    text-align: left;
+
+    background-color: #66bb6b88;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#simulator-steam-output-toggle::before {
+    content: "Steam ON";
+    position: absolute;
+    top: 0px;
+    transition: transform 0.3s;
+}
+
+#simulator-steam-output-toggle.off {
+    background-color: #F008;
+}
+
+#simulator-steam-output-toggle.off::before {
+    content: "Steam OFF";
+}
+
+/*
+ * REACTOR TILE UI
+ */
+
 #tileUi {
     position: relative;
     width: 824px;
     height: 920px;
-    margin: 2px 0;
+    margin: 5px 0;
 }
 
 .tile-canvas {

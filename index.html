@@ -37,25 +37,26 @@
 </header>
 
 <div class="main-wrapper">
-  <select name="sizes" id="reactor-size-select">
+  <select name="sizes" class="simulator-options" id="reactor-size-select">
     <option value="0">Small</option>
     <option value="1">Medium</option>
     <option value="2">Large</option>
     <option value="3">Extreme</option>
   </select>
-  <select name="overlay" id="reactor-overlay-select">
+  <select name="overlay" class="simulator-options" id="reactor-overlay-select">
     <option value="1">Temperature</option>
     <option value="2">Neutron Absorbtion</option>
     <option value="3">Neutron Flux</option>
     <option value="4">Neutron Generation</option>
     <option value="5">EU Generation</option>
   </select>
-  <select name="simulatorSpeed" id="simulator-speed-select">
-    <option value=1>Speed 1x</option>
-    <option value=5>Speed 5x</option>
-    <option value=10>Speed 10x</option>
-    <option value=50>Speed 50x</option>
+  <select name="simulatorSpeed" class="simulator-options" id="simulator-speed-select">
+    <option value="1">Speed 1x</option>
+    <option value="5">Speed 5x</option>
+    <option value="10">Speed 10x</option>
+    <option value="50">Speed 50x</option>
   </select>
+  <button name="steamOutput" class="simulator-options" id="simulator-steam-output-toggle"></button>
   <div id="tileUi">
     <canvas id="reactor" class="tile-canvas" width="704" height="704"></canvas>
     <canvas id="materials" class="tile-canvas" width="104" height="704"></canvas>

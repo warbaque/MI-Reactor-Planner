@@ -89,6 +89,10 @@ class SteamHeaterComponent extends TemperatureComponent {
 
     tryMakeSteam(water, steam, euPerSteamMb) {
 
+        if (!Simulator.steamOutput) {
+            return 0;
+        }
+
         if (this.getTemperature() > 100) {
             const steamProduction = ((this.getTemperature() - 100) / (this.temperatureMax - 100) * this.maxEuProduction / euPerSteamMb);
             if (steamProduction > 0) {
