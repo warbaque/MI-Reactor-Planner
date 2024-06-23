@@ -36,7 +36,7 @@
   <h1>Reactor Planner</h1>
 </header>
 
-<div class="main-wrapper">
+<div class="main-wrapper" style="width: 900px">
   <select name="sizes" class="simulator-options" id="reactor-size-select">
     <option value="0">Small</option>
     <option value="1">Medium</option>
@@ -55,6 +55,12 @@
     <option value="5">Speed 5x</option>
     <option value="10">Speed 10x</option>
     <option value="50">Speed 50x</option>
+  </select>
+  <select name="simulatorHistoryLength" class="simulator-options" id="simulator-history-select">
+    <option value="1200">History 1 min</option>
+    <option value="12000">History 10 min</option>
+    <option value="72000">History 1 h</option>
+    <option value="720000">History 10 h</option>
   </select>
   <button name="steamOutput" class="simulator-options" id="simulator-steam-output-toggle"></button>
   <div id="tileUi">

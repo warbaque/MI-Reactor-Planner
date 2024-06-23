@@ -3,6 +3,7 @@ class IntegerHistoryComponent {
     constructor(keys, tickHistorySize) {
         this.keys = keys;
         this.tickHistorySize = tickHistorySize;
+        this.last = 0;
 
         this.histories = {}
         this.updatingValues = new Array(keys.length).fill(0);
@@ -31,11 +32,11 @@ class IntegerHistoryComponent {
 
     tick() {
         this.keys.forEach((key, i) => {
-            const valuesArray = this.histories[key];
-            this.averages[i] += (this.updatingValues[i] - valuesArray[this.tickHistorySize - 1]) / this.tickHistorySize;
-            this.histories[key] = [this.updatingValues[i], ...valuesArray.slice(0, -1)];
+            this.averages[i] += (this.updatingValues[i] - this.histories[key][this.last]) / this.tickHistorySize;
+            this.histories[key][this.last] = this.updatingValues[i];
             this.updatingValues[i] = 0;
         });
+        this.last = (this.last + 1) % this.tickHistorySize;
     }
 
     addValue(key, delta) {
@@ -135,8 +136,8 @@ const NuclearProductionHistoryComponentType = Object.freeze(Object.fromEntries([
 ].map((type, i) => [type, i])));
 
 class NuclearProductionHistoryComponent extends IntegerHistoryComponent {
-    constructor() {
-        super(Object.keys(NuclearProductionHistoryComponentType), 20 * 60);
+    constructor(length = 1200) {
+        super(Object.keys(NuclearProductionHistoryComponentType), length);
     }
 
     registerConsumption(type, amount) {

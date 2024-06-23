@@ -10,6 +10,7 @@ const Blocks = Object.freeze({
 const Simulator = {};
 Simulator.speed = 1;
 Simulator.steamOutput = true;
+Simulator.historyLength = 1200;
 
 Simulator.init = function(map) {
     const hatchesGrid = new Array(map.size * map.size).fill(null);
@@ -21,7 +22,7 @@ Simulator.init = function(map) {
     });
     this.nuclearGrid = new NuclearGrid(map.size, map.size, hatchesGrid);
     this.efficiencyHistory = new NuclearEfficiencyHistoryComponent();
-    this.productionHistory = new NuclearProductionHistoryComponent();
+    this.productionHistory = new NuclearProductionHistoryComponent(Simulator.historyLength);
 };
 
 Simulator.update = function() {
@@ -230,6 +231,12 @@ Game.init = function () {
     const simulatorSpeed = document.getElementById("simulator-speed-select");
     simulatorSpeed.addEventListener("change", () => {
         Simulator.speed = parseInt(simulatorSpeed.value);
+    });
+
+    const simulatorHistoryLength = document.getElementById("simulator-history-select");
+    simulatorHistoryLength.addEventListener("change", () => {
+        Simulator.historyLength = parseInt(simulatorHistoryLength.value);
+        Simulator.productionHistory = new NuclearProductionHistoryComponent(Simulator.historyLength);
     });
 
     const steamOutput = document.getElementById("simulator-steam-output-toggle");
