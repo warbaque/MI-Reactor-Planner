@@ -292,8 +292,8 @@ Game.init = function () {
         if (tile != null) {
             this.tooltipCanvas.style.left = (event.offsetX + 20) + "px";
             this.tooltipCanvas.style.top = (event.offsetY - 20) + "px";
-            this.tooltipCanvas.width = 250;
-            this.tooltipCanvas.height = 210;
+            HiDPICanvas(this.tooltipCanvas, 250, 210, PIXEL_RATIO);
+
             this.tooltipCtx.font = "10pt Source Code Pro, Courier, monospace";
             this._drawTooltip = () => {
                 reactorTileInfo(tile);
@@ -391,14 +391,12 @@ Game.init = function () {
         if (tile != null) {
             this.tooltipCanvas.style.left = (event.offsetX + 20 + 720) + "px";
             this.tooltipCanvas.style.top = (event.offsetY - 20) + "px";
-            this.tooltipCanvas.width = 350;
-            this.tooltipCanvas.height = 400;
             if (tile.component instanceof NuclearFuel) {
-                this.tooltipCanvas.height = 10 + 19 * 20;
+                HiDPICanvas(this.tooltipCanvas, 350, 10 + 19 * 20, PIXEL_RATIO);
             } else if (tile.component instanceof NuclearAbsorbable || tile.component instanceof FluidNuclearComponent) {
-                this.tooltipCanvas.height = 10 + 12 * 20;
+                HiDPICanvas(this.tooltipCanvas, 350, 10 + 12 * 20, PIXEL_RATIO);
             } else {
-                this.tooltipCanvas.height = 10 + 4 * 20;
+                HiDPICanvas(this.tooltipCanvas, 350, 10 + 4 * 20, PIXEL_RATIO);
             }
 
             this.tooltipCtx.font = "10pt Source Code Pro, Courier, monospace";
@@ -653,7 +651,7 @@ Game._drawReactorStatistics = function (fluidFrame) {
         }
     };
 
-    const rods = new textWriter(this.statistics, this.statisticsCanvas.width / 2);
+    const rods = new textWriter(this.statistics, this.statisticsCanvas.width / (2 * PIXEL_RATIO));
     const addRod = (prefix, value)  => {
         if (value !== 0) {
             let suffix = 't';
@@ -668,7 +666,7 @@ Game._drawReactorStatistics = function (fluidFrame) {
                     suffix = suf;
                 }
             });
-            rods(`${prefix}${value<0?'':' '}${value.toFixed(1)} / ${suffix}`, '#fff');
+            rods(`${prefix}${value<0?'':' '}${value.toFixed(3)} / ${suffix}`, '#fff');
         }
     };
 

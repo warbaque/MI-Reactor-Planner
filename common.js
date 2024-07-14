@@ -116,8 +116,19 @@ Game.hoverOut = function (event) {};
 // start up function
 //
 
+let PIXEL_RATIO = 1;
+
+const HiDPICanvas = function(canvas, w, h, ratio=1) {
+    canvas.width = w * ratio;
+    canvas.height = h * ratio;
+    canvas.style.width = w + "px";
+    canvas.style.height = h + "px";
+    canvas.getContext("2d").setTransform(ratio, 0, 0, ratio, 0, 0);
+}
+
 window.onload = function () {
     Game.reactorCanvas = document.getElementById('reactor');
+    HiDPICanvas(Game.reactorCanvas, 704, 704, PIXEL_RATIO);
     Game.reactorCanvas.addEventListener('click', (event) => Game.clickReactor(event));
     Game.reactorCanvas.addEventListener('mousemove', (event) => Game.hoverReactor(event));
     Game.reactorCanvas.addEventListener('mouseout', (event) => Game.hoverOut(event));
@@ -126,6 +137,7 @@ window.onload = function () {
     Game.ctx.imageSmoothingEnabled = false;
 
     Game.materialsCanvas = document.getElementById('materials');
+    HiDPICanvas(Game.materialsCanvas, 104, 704);
     Game.materialsCanvas.addEventListener('click', (event) => Game.clickMaterials(event));
     Game.materialsCanvas.addEventListener('mousemove', (event) => Game.hoverMaterials(event));
     Game.materialsCanvas.addEventListener('mouseout', (event) => Game.hoverOut(event));
@@ -133,10 +145,10 @@ window.onload = function () {
     Game.materials.imageSmoothingEnabled = false;
 
     Game.statisticsCanvas = document.getElementById('reactorStatistics');
+    HiDPICanvas(Game.statisticsCanvas, 704, 200, PIXEL_RATIO);
     Game.statistics = Game.statisticsCanvas.getContext('2d');
-    Game.statisticsCanvas.width = Game.reactorCanvas.width;
-    Game.statisticsCanvas.height = 200;
     Game.statistics.font = "10pt Source Code Pro, Courier, monospace";
+    Game.statistics.imageSmoothingEnabled = false;
 
     Game.tooltipCanvas = document.getElementById('reactorTooltip');
     Game.tooltipCtx = Game.tooltipCanvas.getContext('2d');
