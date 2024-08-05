@@ -53,6 +53,6 @@ Planner is deployed on github pages: https://warbaque.github.io/MI-Reactor-Plann
 
 | Power | Deuterium | Tritium | Plutonium |  |
 |-------|-----------|---------|-----------|--|
-| 14k EU/t | 12.0 mb/t | 0 mb/t | 0.6/min | [Link](https://katiska.dy.fi/temp/reactor/?i=0&state=W251bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLDE3LDE3LDE3LG51bGwsbnVsbCwxNyw2LDE3LG51bGwsbnVsbCwxNywxNywxNyxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbF0=) |
+| 14k EU/t | 12.0 mb/t | 0 mb/t | 0.6/min | [Link](https://warbaque.github.io/MI-Reactor-Planner/?i=0&state=W251bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLDE3LDE3LDE3LG51bGwsbnVsbCwxNyw2LDE3LG51bGwsbnVsbCwxNywxNywxNyxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbF0=) |
 | 16k EU/t | 10.0 mb/t | 0 mb/t | 1.0/min | [Link](https://warbaque.github.io/MI-Reactor-Planner/?i=0&state=W251bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLDE3LDQsMTcsbnVsbCxudWxsLDE3LDE3LDE3LG51bGwsbnVsbCwxNyw0LDE3LG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsXQ==) |
 | 19k EU/t | 5.8 mb/t | 0 mb/t | 1.8/min | [Link](https://warbaque.github.io/MI-Reactor-Planner/?i=0&state=W251bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLDE3LDQsMTcsbnVsbCxudWxsLDQsMTcsNCxudWxsLG51bGwsMTcsNCwxNyxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbF0=) |
