@@ -25,9 +25,14 @@ Planner is deployed on github pages: https://warbaque.github.io/MI-Reactor-Plann
 
 **Plutonium**
 
-| Power | Plutonium |  | *designed by* |
-|-------|-----------|--|---------------|
-| 0 EU/t | 20.5/min | [Link](https://warbaque.github.io/MI-Reactor-Planner/?i=3&state=W251bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCw0LDEyLDQsMTIsNCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsMCwxMiwwLDEyLDAsMTIsMCxudWxsLG51bGwsbnVsbCw0LDEyLDQsMTIsNCwxMiw0LDEyLDQsbnVsbCxudWxsLDEyLDAsMTIsMCwxMiwwLDEyLDAsMTIsbnVsbCxudWxsLDQsMTIsNCwxMiw0LDEyLDQsMTIsNCxudWxsLG51bGwsMTIsMCwxMiwwLDEyLDAsMTIsMCwxMixudWxsLG51bGwsNCwxMiw0LDEyLDQsMTIsNCwxMiw0LG51bGwsbnVsbCxudWxsLDAsMTIsMCwxMiwwLDEyLDAsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLDQsMTIsNCwxMiw0LG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbF0=) | Pink_Evil |
+| Power | Size | Plutonium |  | *designed by* |
+|-------|------|-----------|--|---------------|
+| 0 EU/t | Extreme | 20.5/min | [Link](https://warbaque.github.io/MI-Reactor-Planner/?i=3&state=W251bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCw0LDEyLDQsMTIsNCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsMCwxMiwwLDEyLDAsMTIsMCxudWxsLG51bGwsbnVsbCw0LDEyLDQsMTIsNCwxMiw0LDEyLDQsbnVsbCxudWxsLDEyLDAsMTIsMCwxMiwwLDEyLDAsMTIsbnVsbCxudWxsLDQsMTIsNCwxMiw0LDEyLDQsMTIsNCxudWxsLG51bGwsMTIsMCwxMiwwLDEyLDAsMTIsMCwxMixudWxsLG51bGwsNCwxMiw0LDEyLDQsMTIsNCwxMiw0LG51bGwsbnVsbCxudWxsLDAsMTIsMCwxMiwwLDEyLDAsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLDQsMTIsNCwxMiw0LG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbF0=) | Pink_Evil |
+| 0 EU/t | Large | 8.7/min | [Link](https://warbaque.github.io/MI-Reactor-Planner/?i=2&state=W251bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLDQsMTIsNCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsMCwxMiwwLDEyLDAsbnVsbCxudWxsLG51bGwsNCwxMiw0LDEyLDQsMTIsNCxudWxsLG51bGwsMTIsMCwxMiwwLDEyLDAsMTIsbnVsbCxudWxsLDQsMTIsNCwxMiw0LDEyLDQsbnVsbCxudWxsLG51bGwsMCwxMiwwLDEyLDAsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLDQsMTIsNCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbF0=) | PurpleDino |
+| 0 EU/t | Medium | 3.5/min | [Link](https://warbaque.github.io/MI-Reactor-Planner/?i=1&state=W251bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLDAsMTIsMCxudWxsLG51bGwsbnVsbCw0LDEyLDQsMTIsNCxudWxsLG51bGwsMTIsMCwxMiwwLDEyLG51bGwsbnVsbCw0LDEyLDQsMTIsNCxudWxsLG51bGwsbnVsbCwwLDEyLDAsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLG51bGxd) | PurpleDino |
+| 0 EU/t | Small | 1.3/min | [Link](https://warbaque.github.io/MI-Reactor-Planner/?i=0&state=W251bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsLDQsMTIsNCxudWxsLG51bGwsMTIsMCwxMixudWxsLG51bGwsNCwxMiw0LG51bGwsbnVsbCxudWxsLG51bGwsbnVsbCxudWxsXQ==) | PurpleDino |
+
+
 
 **Power**
 
