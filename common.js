@@ -129,6 +129,7 @@ const HiDPICanvas = function (canvas, w, h, ratio = 1) {
   canvas.height = h * ratio;
   canvas.style.width = w + "px";
   canvas.style.height = h + "px";
+  canvas.style.backgroundColor = "#1c1c1f";
   canvas.getContext("2d").setTransform(ratio, 0, 0, ratio, 0, 0);
 };
 
@@ -151,7 +152,7 @@ window.onload = function () {
   Game.materials.imageSmoothingEnabled = false;
 
   Game.statisticsCanvas = document.getElementById("reactorStatistics");
-  HiDPICanvas(Game.statisticsCanvas, 704, 200, PIXEL_RATIO);
+  HiDPICanvas(Game.statisticsCanvas, 824, 200, PIXEL_RATIO);
   Game.statistics = Game.statisticsCanvas.getContext("2d");
   Game.statistics.font = "10pt Source Code Pro, Courier, monospace";
   Game.statistics.imageSmoothingEnabled = false;

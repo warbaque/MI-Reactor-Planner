@@ -1,6 +1,13 @@
-const BOUNDARY = "#aaaaaa";
-const CASING = "#c6c6c6";
+const BOUNDARY = "rgba(28, 28, 31, 1)";
+const CASING = "#484848";
 const HATCH = "#8b8b8b";
+
+const TEXT_COLOR_1 = "#caeaf5";
+const TEXT_COLOR_2 = "#a7a7a7";
+const TEXT_COLOR_3 = "#ffb400";
+const TEXT_COLOR_4 = "#ff0000";
+const TEXT_COLOR_5 = "#00ff00";
+const TEXT_COLOR_7 = "#e4007f";
 
 const Blocks = Object.freeze({
   CASING: Symbol("CASING"),
@@ -73,7 +80,7 @@ TileMap = (i, tiles = null) => {
         return;
       }
       const newTile = oldTile === tile ? Tile.HATCH : tile;
-      if (newTile != oldTile) {
+      if (newTile !== oldTile) {
         this.tiles[row * map.size + col] = newTile;
         Simulator.init(map);
         this.updateState();
@@ -92,15 +99,15 @@ TileMap = (i, tiles = null) => {
     for (let x = 0; x < length; x++) {
       let minZ;
       let xAbs = Math.abs(x - 2 - i);
-      if (i != 3) {
-        minZ = xAbs == 0 ? 0 : xAbs - 1;
+      if (i !== 3) {
+        minZ = xAbs === 0 ? 0 : xAbs - 1;
       } else {
         minZ = xAbs <= 1 ? 0 : xAbs - 2;
       }
 
       let maxZ = 2 * (2 + i) - minZ;
       for (let z = minZ; z <= maxZ; z++) {
-        if (!(z == minZ || z == maxZ || xAbs == 2 + i)) {
+        if (!(z === minZ || z === maxZ || xAbs === 2 + i)) {
           map.tiles[z * length + x] = Tile.HATCH;
         }
       }
@@ -285,16 +292,16 @@ Game.init = function () {
     this.tooltipCtx.clearRect(0, 0, this.tooltipCanvas.width, this.tooltipCanvas.height);
     const tooltipLine = new textWriter(this.tooltipCtx);
 
-    tooltipLine(`Temperature         ${tile.getTemperature().toFixed(1)}`, "#ffffff");
-    tooltipLine(`    Max Temperature ${tile.component ? clamp(tile.component.getMaxTemperature()) : NuclearConstant.MAX_TEMPERATURE}`, '#fcfc54'); // prettier-ignore
-    tooltipLine(`Neutron Absorbtion  ${tile.getMeanNeutronAbsorption(NeutronType.BOTH).toFixed(1)}`, "#ffffff");
-    tooltipLine(`    Fast Neutron    ${tile.getMeanNeutronAbsorption(NeutronType.FAST).toFixed(1)}`, "#a7a7a7");
-    tooltipLine(`    Thermal Neutron ${tile.getMeanNeutronAbsorption(NeutronType.THERMAL).toFixed(1)}`, "#a7a7a7");
-    tooltipLine(`Neutron Flux        ${tile.getMeanNeutronFlux(NeutronType.BOTH).toFixed(1)}`, "#ffffff");
-    tooltipLine(`    Fast Neutron    ${tile.getMeanNeutronFlux(NeutronType.FAST).toFixed(1)}`, "#a7a7a7");
-    tooltipLine(`    Thermal Neutron ${tile.getMeanNeutronFlux(NeutronType.THERMAL).toFixed(1)}`, "#a7a7a7");
-    tooltipLine(`Neutron Generation  ${tile.getMeanNeutronGeneration().toFixed(1)}`, "#ffffff");
-    tooltipLine(`EU Generation       ${tile.getMeanEuGeneration().toFixed(0)}`, "#fcdb7c");
+    tooltipLine(`Temperature         ${tile.getTemperature().toFixed(1)}`, TEXT_COLOR_1);
+    tooltipLine(`    Max Temperature ${tile.component ? clamp(tile.component.getMaxTemperature()) : NuclearConstant.MAX_TEMPERATURE}`, TEXT_COLOR_7); // prettier-ignore
+    tooltipLine(`Neutron Absorbtion  ${tile.getMeanNeutronAbsorption(NeutronType.BOTH).toFixed(1)}`, TEXT_COLOR_1);
+    tooltipLine(`    Fast Neutron    ${tile.getMeanNeutronAbsorption(NeutronType.FAST).toFixed(1)}`, TEXT_COLOR_2);
+    tooltipLine(`    Thermal Neutron ${tile.getMeanNeutronAbsorption(NeutronType.THERMAL).toFixed(1)}`, TEXT_COLOR_2);
+    tooltipLine(`Neutron Flux        ${tile.getMeanNeutronFlux(NeutronType.BOTH).toFixed(1)}`, TEXT_COLOR_1);
+    tooltipLine(`    Fast Neutron    ${tile.getMeanNeutronFlux(NeutronType.FAST).toFixed(1)}`, TEXT_COLOR_2);
+    tooltipLine(`    Thermal Neutron ${tile.getMeanNeutronFlux(NeutronType.THERMAL).toFixed(1)}`, TEXT_COLOR_2);
+    tooltipLine(`Neutron Generation  ${tile.getMeanNeutronGeneration().toFixed(1)}`, TEXT_COLOR_1);
+    tooltipLine(`EU Generation       ${tile.getMeanEuGeneration().toFixed(0)}`, TEXT_COLOR_3);
   };
 
   this.hoverReactor = function (event) {
@@ -378,12 +385,12 @@ Game.init = function () {
       }
     })();
 
-    tooltipLine(name, "#aaffaa");
+    tooltipLine(name, TEXT_COLOR_5);
 
     const thermalInteraction = (heatConduction, maxTemperature) => {
-      tooltipLine("Thermal Interaction", "#fcdb7c");
-      tooltipLine(`  Heat Conduction        ${(heatConduction * 1000).toFixed(0)}/°kCt`, "#ffffff");
-      tooltipLine(`  Max Temperature        ${clamp(maxTemperature)} °C`, "#ffffff");
+      tooltipLine("Thermal Interaction", TEXT_COLOR_3);
+      tooltipLine(`  Heat Conduction        ${(heatConduction * 1000).toFixed(0)}/°kCt`, TEXT_COLOR_1);
+      tooltipLine(`  Max Temperature        ${clamp(maxTemperature)} °C`, TEXT_COLOR_1);
     };
     if (tile.component instanceof INuclearComponent) {
       thermalInteraction(tile.component.heatConduction, tile.component.getMaxTemperature());
@@ -400,31 +407,31 @@ Game.init = function () {
         .getNeutronBehaviour()
         .interactionRelativeProbability(neutronType, NeutronInteraction.ABSORPTION);
       const slowingProba = tile.component.getNeutronBehaviour().neutronSlowingProbability();
-      tooltipLine(`  Scattering Probability ${(100 * interactionProb * scattering).toFixed(1)} %`, "#ffffff");
+      tooltipLine(`  Scattering Probability ${(100 * interactionProb * scattering).toFixed(1)} %`, TEXT_COLOR_1);
       if (neutronType === NeutronType.FAST) {
-        tooltipLine(`    Thermal Neutron      ${(100 * slowingProba).toFixed(1)} %`, "#a7a7a7");
-        tooltipLine(`    Fast Neutron         ${(100 * (1 - slowingProba)).toFixed(1)} %`, "#a7a7a7");
+        tooltipLine(`    Thermal Neutron      ${(100 * slowingProba).toFixed(1)} %`, TEXT_COLOR_2);
+        tooltipLine(`    Fast Neutron         ${(100 * (1 - slowingProba)).toFixed(1)} %`, TEXT_COLOR_2);
       }
-      tooltipLine(`  Absorbtion Probability ${(100 * interactionProb * absorption).toFixed(1)} %`, "#ffffff");
+      tooltipLine(`  Absorbtion Probability ${(100 * interactionProb * absorption).toFixed(1)} %`, TEXT_COLOR_1);
     };
 
     if (tile.component instanceof NuclearAbsorbable || tile.component instanceof FluidNuclearComponent) {
-      tooltipLine("Fast Neutron", "#fcdb7c");
+      tooltipLine("Fast Neutron", TEXT_COLOR_3);
       neutronInfo(NeutronType.FAST);
-      tooltipLine("Thermal Neutron", "#fcdb7c");
+      tooltipLine("Thermal Neutron", TEXT_COLOR_3);
       neutronInfo(NeutronType.THERMAL);
     }
 
     if (tile.component instanceof NuclearFuel) {
-      tooltipLine("Single Neutron Capture", "#fcdb7c");
-      tooltipLine(`  Max neutrons emitted   ${tile.component.neutronMultiplicationFactor.toFixed(1)}`, "#ffffff");
-      tooltipLine(`    Temperature Low      ${tile.component.tempLimitLow} °C`, "#a7a7a7");
-      tooltipLine(`    Temperature High     ${tile.component.tempLimitHigh} °C`, "#a7a7a7");
-      tooltipLine(`  Fast Neutron Energy    ${NuclearConstant.EU_FOR_FAST_NEUTRON} EU`, "#ffffff");
-      tooltipLine(`  Energy per capture     ${tile.component.directEUbyDesintegration} EU`, "#ffffff");
+      tooltipLine("Single Neutron Capture", TEXT_COLOR_3);
+      tooltipLine(`  Max neutrons emitted   ${tile.component.neutronMultiplicationFactor.toFixed(1)}`, TEXT_COLOR_1);
+      tooltipLine(`    Temperature Low      ${tile.component.tempLimitLow} °C`, TEXT_COLOR_2);
+      tooltipLine(`    Temperature High     ${tile.component.tempLimitHigh} °C`, TEXT_COLOR_2);
+      tooltipLine(`  Fast Neutron Energy    ${NuclearConstant.EU_FOR_FAST_NEUTRON} EU`, TEXT_COLOR_1);
+      tooltipLine(`  Energy per capture     ${tile.component.directEUbyDesintegration} EU`, TEXT_COLOR_1);
       tooltipLine(
         `  Heat per capture       ${(tile.component.directEUbyDesintegration / NuclearConstant.EU_PER_DEGREE).toFixed(2)} °C`,
-        "#ffffff"
+        TEXT_COLOR_1
       );
     }
   };
@@ -559,7 +566,7 @@ Game._drawReactor = function (fluidFrame) {
         );
       }
 
-      if (material && tile != Tile.CASING) {
+      if (material && tile !== Tile.CASING) {
         const tileData = Simulator.nuclearGrid.getNuclearTile(c, r);
 
         const [u, v] = overlayColor(tileData);
@@ -604,9 +611,9 @@ Game._drawReactor = function (fluidFrame) {
   );
 
   const infoLine = new textWriter(this.ctx);
-  infoLine(UI.format(euProduction, " EU/t "), "#fcdb7c", "produced for", "#ffffff");
-  infoLine(UI.format(euFuelConsumption, " EU/t "), "#fcdb7c", "of fuel consumed", "#ffffff");
-  infoLine(`Efficiency ${((100 * euProduction) / euFuelConsumption).toFixed(1)} %`, "#fc5454");
+  infoLine(UI.format(euProduction, " EU/t "), TEXT_COLOR_3, "produced for", TEXT_COLOR_1);
+  infoLine(UI.format(euFuelConsumption, " EU/t "), TEXT_COLOR_3, "of fuel consumed", TEXT_COLOR_1);
+  infoLine(`Efficiency ${((100 * euProduction) / euFuelConsumption).toFixed(1)} %`, TEXT_COLOR_4);
 };
 
 Game._drawTooltip = function () {};
@@ -632,7 +639,7 @@ Game._drawTileSelector = function (fluidFrame) {
   });
 
   if (this.material.selected.tile != null) {
-    this.materials.strokeStyle = "#f00";
+    this.materials.strokeStyle = TEXT_COLOR_4;
     this.materials.beginPath();
     const x = this.material.selected.x;
     const y = this.material.selected.y;
@@ -710,7 +717,7 @@ Game._drawReactorStatistics = function (fluidFrame) {
   const fluids = new textWriter(this.statistics);
   const addFluid = (prefix, value) => {
     if (value > 0) {
-      fluids(`${prefix}${UI.format(value, " mb/t")}`, "#fff");
+      fluids(`${prefix}${UI.format(value, " mb/t")}`, TEXT_COLOR_1);
     }
   };
 
@@ -729,17 +736,17 @@ Game._drawReactorStatistics = function (fluidFrame) {
           suffix = suf;
         }
       });
-      rods(`${prefix}${value < 0 ? "" : " "}${value.toFixed(3)} / ${suffix}`, "#fff");
+      rods(`${prefix}${value < 0 ? "" : " "}${value.toFixed(3)} / ${suffix}`, TEXT_COLOR_1);
     }
   };
 
-  fluids("INPUT", "#fcfc54");
+  fluids("INPUT", TEXT_COLOR_3);
   addFluid("  Water                ", waterConsumption);
   addFluid("  Heavy Water          ", heavyWaterConsumption);
   addFluid("  HP Water             ", highPressureWaterConsumption);
   addFluid("  HP Heavy Water       ", highPressureHeavyWaterConsumption);
 
-  fluids("OUTPUT", "#fcfc54");
+  fluids("OUTPUT", TEXT_COLOR_3);
   addFluid("  Steam                ", steamProduction);
   addFluid("  Heavy Water Steam    ", heavyWaterSteamProduction);
   addFluid("  HP Water Steam       ", highPressureSteamProduction);
@@ -758,7 +765,7 @@ Game._drawReactorStatistics = function (fluidFrame) {
     );
   };
 
-  rods("ITEM DEPLETION", "#fcfc54");
+  rods("ITEM DEPLETION", TEXT_COLOR_3);
   addRod("  Uranium Rod            ", uraniumRodConsumption);
   addRod("  LE Mox Rod             ", leMoxRodConsumption);
   addRod("  LE Uranium Rod         ", leUraniumRodConsumption);
@@ -767,7 +774,7 @@ Game._drawReactorStatistics = function (fluidFrame) {
   addRod("  Control Rod            ", controlRodConsumption);
   addRod("  Invar Plate            ", invarPlateConsumption);
   addRod("  Carbon Plate           ", carbonPlateConsumption);
-  rods("ISOTOPE NET", "#fcfc54");
+  rods("ISOTOPE NET", TEXT_COLOR_3);
   addRod("  Uranium 235            ", isotopeNet(1, 0, -3, 0, -9));
   addRod("  Uranium 238            ", isotopeNet(53, -24, -24, -18, -18));
   addRod("  Plutonium              ", isotopeNet(27, 21, 24, 9, 18));

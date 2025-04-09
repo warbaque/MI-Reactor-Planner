@@ -35,47 +35,47 @@
       <h1>Reactor Planner</h1>
     </header>
 
-    <div class="main-wrapper" style="width: 900px">
-      <select name="sizes" class="simulator-options" id="reactor-size-select">
-        <option value="0">Small</option>
-        <option value="1">Medium</option>
-        <option value="2">Large</option>
-        <option value="3">Extreme</option>
-      </select>
-      <select name="overlay" class="simulator-options" id="reactor-overlay-select">
-        <option value="1">Temperature</option>
-        <option value="2">Neutron Absorbtion</option>
-        <option value="3">Neutron Flux</option>
-        <option value="4">Neutron Generation</option>
-        <option value="5">EU Generation</option>
-      </select>
-      <select name="simulatorSpeed" class="simulator-options" id="simulator-speed-select">
-        <option value="1">Speed 1x</option>
-        <option value="5">Speed 5x</option>
-        <option value="10">Speed 10x</option>
-        <option value="50">Speed 50x</option>
-      </select>
-      <select name="simulatorHistoryLength" class="simulator-options" id="simulator-history-select">
-        <option value="1200">History 1 min</option>
-        <option value="12000">History 10 min</option>
-        <option value="72000">History 1 h</option>
-        <option value="720000">History 10 h</option>
-      </select>
-      <button name="steamOutput" class="simulator-options" id="simulator-steam-output-toggle"></button>
+    <div class="main-wrapper">
+      <div class="params">
+        <select name="sizes" class="simulator-options" id="reactor-size-select">
+          <option value="0">Small</option>
+          <option value="1">Medium</option>
+          <option value="2">Large</option>
+          <option value="3">Extreme</option>
+        </select>
+        <select name="overlay" class="simulator-options" id="reactor-overlay-select">
+          <option value="1">Temperature</option>
+          <option value="2">Neutron Absorbtion</option>
+          <option value="3">Neutron Flux</option>
+          <option value="4">Neutron Generation</option>
+          <option value="5">EU Generation</option>
+        </select>
+        <select name="simulatorSpeed" class="simulator-options" id="simulator-speed-select">
+          <option value="1">Speed 1x</option>
+          <option value="5">Speed 5x</option>
+          <option value="10">Speed 10x</option>
+          <option value="50">Speed 50x</option>
+        </select>
+        <select name="simulatorHistoryLength" class="simulator-options" id="simulator-history-select">
+          <option value="1200">History 1 min</option>
+          <option value="12000">History 10 min</option>
+          <option value="72000">History 1 h</option>
+          <option value="720000">History 10 h</option>
+        </select>
+        <button name="steamOutput" class="simulator-options" id="simulator-steam-output-toggle"></button>
+      </div>
       <div id="tileUi">
-        <canvas id="reactor" class="tile-canvas"></canvas>
         <canvas id="materials" class="tile-canvas"></canvas>
+        <canvas id="reactor" class="tile-canvas"></canvas>
         <canvas id="reactorStatistics" class="tile-canvas"></canvas>
         <canvas id="reactorTooltip" class="tile-canvas"></canvas>
       </div>
-
       <footer class="main-footer">
-        <p>
+        <p class="text">
           Source code and examples on
           <a href="https://github.com/warbaque/MI-Reactor-Planner/blob/main/README.md">the github repository</a>.
         </p>
       </footer>
     </div>
-    <!-- main wrapper -->
   </body>
 </html>
