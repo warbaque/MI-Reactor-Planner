@@ -76,9 +76,12 @@ TileMap = (i, tiles = null) => {
             if (newTile != oldTile) {
                 this.tiles[row * map.size + col] = newTile;
                 Simulator.init(map);
-                window.history.pushState(null, null, `?i=${i}&state=${btoa(JSON.stringify(this.tiles))}`);
+                this.updateState();
             }
         },
+        updateState: function () {
+            window.history.pushState(null, null, `?i=${i}&state=${btoa(JSON.stringify(this.tiles))}${Simulator.steamOutput === true ? '' : '&steam=off'}`);
+        }
     };
 
     if (!tiles) {
@@ -204,6 +207,7 @@ Game.init = function () {
     const urlParams = new URLSearchParams(window.location.search);
     const sizeIndexParam = urlParams.get('i');
     const stateParam = urlParams.get('state');
+    const steamParam = urlParams.get('steam');
 
     const sizeIndex = sizeIndexParam ? JSON.parse(sizeIndexParam) : 0;
     const state = stateParam ? JSON.parse(atob(stateParam)) : null;
@@ -243,7 +247,13 @@ Game.init = function () {
     steamOutput.onclick = (event) => {
         steamOutput.classList.toggle('off');
         Simulator.steamOutput = !steamOutput.classList.contains('off');
+        this.map.updateState();
     };
+
+    if (steamParam === 'off') {
+        steamOutput.classList.add('off');
+    }
+    Simulator.steamOutput = !steamOutput.classList.contains('off');
 
     this.clickMaterials = function (event) {
         let x = Math.floor(event.offsetX / 34);
