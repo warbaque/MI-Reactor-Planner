@@ -123,13 +123,14 @@ Game.hoverOut = function (event) {};
 //
 
 let PIXEL_RATIO = 1;
+let CANVAS_COLOR = "#1c1c1f";
 
 const HiDPICanvas = function (canvas, w, h, ratio = 1) {
   canvas.width = w * ratio;
   canvas.height = h * ratio;
   canvas.style.width = w + "px";
   canvas.style.height = h + "px";
-  canvas.style.backgroundColor = "#1c1c1f";
+  canvas.style.backgroundColor = CANVAS_COLOR;
   canvas.getContext("2d").setTransform(ratio, 0, 0, ratio, 0, 0);
 };
 

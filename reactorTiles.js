@@ -1,13 +1,37 @@
-const BOUNDARY = "rgba(28, 28, 31, 1)";
-const CASING = "#484848";
+const TILE_BACKGROUND = "#484848";
+const TILE_BORDER = "#aaa8";
+const CASING = "#c6c6c6";
 const HATCH = "#8b8b8b";
 
-const TEXT_COLOR_1 = "#caeaf5";
+const TEXT_COLOR_1 = "#ffffff";
 const TEXT_COLOR_2 = "#a7a7a7";
-const TEXT_COLOR_3 = "#ffb400";
-const TEXT_COLOR_4 = "#ff0000";
-const TEXT_COLOR_5 = "#00ff00";
-const TEXT_COLOR_7 = "#e4007f";
+const TEXT_COLOR_3 = "#fcdb7c";
+const TEXT_COLOR_4 = "#ff4444";
+const TEXT_COLOR_5 = "#aaffaa";
+const TEXT_COLOR_7 = "#fcfc54";
+
+/*
+  infoline
+    eu        TEXT_COLOR_3
+    text      TEXT_COLOR_1
+    eff       TEXT_COLOR_4
+
+  (r)tooltip
+    name      TEXT_COLOR_5
+    text1     TEXT_COLOR_1
+    text2     TEXT_COLOR_2
+    max temp  TEXT_COLOR_7
+
+  (m)tooltip
+    name      TEXT_COLOR_5
+    text0     TEXT_COLOR_3
+    text1     TEXT_COLOR_1
+    text2     TEXT_COLOR_2
+
+  statistics
+    header    TEXT_COLOR_3
+    text      TEXT_COLOR_1
+*/
 
 const Blocks = Object.freeze({
   CASING: Symbol("CASING"),
@@ -277,6 +301,7 @@ Game.init = function () {
     let x = Math.floor(event.offsetX / this.map.tsize);
     let y = Math.floor(event.offsetY / this.map.tsize);
     this.map.setTile(x, y, this.material.selected.tile);
+    this.hoverReactor(event);
   };
 
   const clamp = (temp) => {
@@ -288,9 +313,69 @@ Game.init = function () {
     this._drawTooltip = () => {};
   };
 
+  const tileName = (type) => {
+    switch (type) {
+      case Blocks.CASING:
+        return "Nuclear Casing";
+      case Blocks.HATCH:
+        return "Empty Hatch";
+      case Fuels.URANIUM_1:
+        return "Uranium Single Rod";
+      case Fuels.URANIUM_2:
+        return "Uranium Double Rod";
+      case Fuels.URANIUM_4:
+        return "Uranium Quad Rod";
+      case Fuels.LE_MOX_1:
+        return "LE Mox Single Rod";
+      case Fuels.LE_MOX_2:
+        return "LE Mox Double Rod";
+      case Fuels.LE_MOX_4:
+        return "LE Mox Quad Rod";
+      case Fuels.LE_URANIUM_1:
+        return "LE Uranium Single Rod";
+      case Fuels.LE_URANIUM_2:
+        return "LE Uranium Double Rod";
+      case Fuels.LE_URANIUM_4:
+        return "LE Uranium Quad Rod";
+      case Items.SMALL_HEAT_EXCHANGER:
+        return "Small Heat Exchanger";
+      case Items.LARGE_HEAT_EXCHANGER:
+        return "Large Heat Exchanger";
+      case Items.INVAR_PLATE:
+        return "Invar Plate";
+      case Items.CARBON_PLATE:
+        return "Carbon Plate";
+      case Fluids.WATER:
+        return "Water";
+      case Fluids.HEAVY_WATER:
+        return "Heavy Water";
+      case Fluids.HIGH_PRESSURE_WATER:
+        return "High Pressure Water";
+      case Fluids.HIGH_PRESSURE_HEAVY_WATER:
+        return "High Pressure Heavy Water";
+      case Fuels.HE_MOX_1:
+        return "HE Mox Single Rod";
+      case Fuels.HE_MOX_2:
+        return "HE Mox Double Rod";
+      case Fuels.HE_MOX_4:
+        return "HE Mox Quad Rod";
+      case Fuels.HE_URANIUM_1:
+        return "HE Uranium Single Rod";
+      case Fuels.HE_URANIUM_2:
+        return "HE Uranium Double Rod";
+      case Fuels.HE_URANIUM_4:
+        return "HE Uranium Quad Rod";
+      case Items.CONTROL_ROD:
+        return "Control Rod";
+    }
+  };
+
   const reactorTileInfo = (tile) => {
     this.tooltipCtx.clearRect(0, 0, this.tooltipCanvas.width, this.tooltipCanvas.height);
     const tooltipLine = new textWriter(this.tooltipCtx);
+
+    const name = tileName(tile.component?.variant ?? Blocks.HATCH);
+    tooltipLine(name, TEXT_COLOR_5);
 
     tooltipLine(`Temperature         ${tile.getTemperature().toFixed(1)}`, TEXT_COLOR_1);
     tooltipLine(`    Max Temperature ${tile.component ? clamp(tile.component.getMaxTemperature()) : NuclearConstant.MAX_TEMPERATURE}`, TEXT_COLOR_7); // prettier-ignore
@@ -328,63 +413,7 @@ Game.init = function () {
     this.tooltipCtx.clearRect(0, 0, this.tooltipCanvas.width, this.tooltipCanvas.height);
     const tooltipLine = new textWriter(this.tooltipCtx);
 
-    const name = (() => {
-      switch (tile.type) {
-        case Blocks.CASING:
-          return "Nuclear Casing";
-        case Blocks.HATCH:
-          return "Empty Hatch";
-        case Fuels.URANIUM_1:
-          return "Uranium Single Rod";
-        case Fuels.URANIUM_2:
-          return "Uranium Double Rod";
-        case Fuels.URANIUM_4:
-          return "Uranium Quad Rod";
-        case Fuels.LE_MOX_1:
-          return "LE Mox Single Rod";
-        case Fuels.LE_MOX_2:
-          return "LE Mox Double Rod";
-        case Fuels.LE_MOX_4:
-          return "LE Mox Quad Rod";
-        case Fuels.LE_URANIUM_1:
-          return "LE Uranium Single Rod";
-        case Fuels.LE_URANIUM_2:
-          return "LE Uranium Double Rod";
-        case Fuels.LE_URANIUM_4:
-          return "LE Uranium Quad Rod";
-        case Items.SMALL_HEAT_EXCHANGER:
-          return "Small Heat Exchanger";
-        case Items.LARGE_HEAT_EXCHANGER:
-          return "Large Heat Exchanger";
-        case Items.INVAR_PLATE:
-          return "Invar Plate";
-        case Items.CARBON_PLATE:
-          return "Carbon Plate";
-        case Fluids.WATER:
-          return "Water";
-        case Fluids.HEAVY_WATER:
-          return "Heavy Water";
-        case Fluids.HIGH_PRESSURE_WATER:
-          return "High Pressure Water";
-        case Fluids.HIGH_PRESSURE_HEAVY_WATER:
-          return "High Pressure Heavy Water";
-        case Fuels.HE_MOX_1:
-          return "HE Mox Single Rod";
-        case Fuels.HE_MOX_2:
-          return "HE Mox Double Rod";
-        case Fuels.HE_MOX_4:
-          return "HE Mox Quad Rod";
-        case Fuels.HE_URANIUM_1:
-          return "HE Uranium Single Rod";
-        case Fuels.HE_URANIUM_2:
-          return "HE Uranium Double Rod";
-        case Fuels.HE_URANIUM_4:
-          return "HE Uranium Quad Rod";
-        case Items.CONTROL_ROD:
-          return "Control Rod";
-      }
-    })();
-
+    const name = tileName(tile.type);
     tooltipLine(name, TEXT_COLOR_5);
 
     const thermalInteraction = (heatConduction, maxTemperature) => {
@@ -429,10 +458,7 @@ Game.init = function () {
       tooltipLine(`    Temperature High     ${tile.component.tempLimitHigh} °C`, TEXT_COLOR_2);
       tooltipLine(`  Fast Neutron Energy    ${NuclearConstant.EU_FOR_FAST_NEUTRON} EU`, TEXT_COLOR_1);
       tooltipLine(`  Energy per capture     ${tile.component.directEUbyDesintegration} EU`, TEXT_COLOR_1);
-      tooltipLine(
-        `  Heat per capture       ${(tile.component.directEUbyDesintegration / NuclearConstant.EU_PER_DEGREE).toFixed(2)} °C`,
-        TEXT_COLOR_1
-      );
+      tooltipLine(`  Heat per capture       ${(tile.component.directEUbyDesintegration / NuclearConstant.EU_PER_DEGREE).toFixed(2)} °C`, TEXT_COLOR_1); // prettier-ignore
     }
   };
 
@@ -531,7 +557,7 @@ UI.format = (x, suffix = "") => {
 };
 
 Game._drawReactor = function (fluidFrame) {
-  this.ctx.fillStyle = BOUNDARY;
+  this.ctx.fillStyle = CANVAS_COLOR;
   this.ctx.fillRect(0, 0, Game.reactorCanvas.width, Game.reactorCanvas.height);
 
   for (let c = 0; c < this.map.size; c++) {
@@ -586,24 +612,19 @@ Game._drawReactor = function (fluidFrame) {
           this.ctx.drawImage(this.warning, c * this.map.tsize, r * this.map.tsize, this.map.tsize, this.map.tsize);
         }
       }
+
+      this.ctx.strokeStyle = TILE_BORDER;
+      this.ctx.beginPath();
+      this.ctx.moveTo((c + 0) * this.map.tsize, (r + 0) * this.map.tsize);
+      this.ctx.lineTo((c + 1) * this.map.tsize, (r + 0) * this.map.tsize);
+      this.ctx.lineTo((c + 1) * this.map.tsize, (r + 1) * this.map.tsize);
+      this.ctx.lineTo((c + 0) * this.map.tsize, (r + 1) * this.map.tsize);
+      this.ctx.lineTo((c + 0) * this.map.tsize, (r + 0) * this.map.tsize);
+      this.ctx.stroke();
     }
   }
 
   let length = this.map.size * this.map.tsize;
-
-  this.ctx.strokeStyle = BOUNDARY;
-  for (let r = 0; r <= this.map.size; r++) {
-    // horizontal
-    this.ctx.beginPath();
-    this.ctx.moveTo(0, r * this.map.tsize);
-    this.ctx.lineTo(length, r * this.map.tsize);
-    this.ctx.stroke();
-    // vertical
-    this.ctx.beginPath();
-    this.ctx.moveTo(r * this.map.tsize, 0);
-    this.ctx.lineTo(r * this.map.tsize, length);
-    this.ctx.stroke();
-  }
 
   const euProduction = Simulator.efficiencyHistory.getAverage(NuclearEfficiencyHistoryComponentType.euProduction);
   const euFuelConsumption = Simulator.efficiencyHistory.getAverage(
@@ -627,8 +648,11 @@ Game._drawTileSelector = function (fluidFrame) {
       case Blocks.HATCH:
         this.materials.fillStyle = HATCH;
         break;
-      default:
+      case Blocks.CASING:
         this.materials.fillStyle = CASING;
+        break;
+      default:
+        this.materials.fillStyle = TILE_BACKGROUND;
     }
     this.materials.fillRect(2 + x * 34, 2 + y * 34, 32, 32);
 
@@ -639,7 +663,7 @@ Game._drawTileSelector = function (fluidFrame) {
   });
 
   if (this.material.selected.tile != null) {
-    this.materials.strokeStyle = TEXT_COLOR_4;
+    this.materials.strokeStyle = "#f00";
     this.materials.beginPath();
     const x = this.material.selected.x;
     const y = this.material.selected.y;
@@ -650,7 +674,7 @@ Game._drawTileSelector = function (fluidFrame) {
     this.materials.lineTo(2 + x * 34 + 0, 2 + y * 34 + 0);
     this.materials.stroke();
 
-    this.materials.fillStyle = "#fff4";
+    this.materials.fillStyle = "#fff3";
     this.materials.fillRect(2 + x * 34, 2 + y * 34, 32, 32);
   }
 };
