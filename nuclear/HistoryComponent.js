@@ -19,16 +19,6 @@ class IntegerHistoryComponent {
     return Math.abs(ret) < 1e-9 ? 0 : ret;
   }
 
-  /*
-    public void clear() {
-        for (var array : histories.values()) {
-            Arrays.fill(array, 0);
-        }
-        Arrays.fill(updatingValues, 0);
-        Arrays.fill(averages, 0);
-    }
-    */
-
   tick() {
     this.keys.forEach((key, i) => {
       this.averages[i] += (this.updatingValues[i] - this.histories[key][this.last]) / this.tickHistorySize;

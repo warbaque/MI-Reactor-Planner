@@ -1,5 +1,4 @@
 class INuclearTile {
-  // extends INuclearTileData
   constructor(component) {
     this.component = component;
   }
@@ -79,25 +78,6 @@ class NuclearHatch extends INuclearTile {
     return this.neutronHistory.getAverageEuGeneration();
   }
 
-  /*
-    getVariant() {
-        /*
-        if isFluid
-            return this.inventory.getFluidStacks()(0).getResource();
-        } else {
-            return this.inventory.getItemStacks().get(0).getResource();
-        }
-    }
-
-    getVariantAmount() {
-        if (isFluid) {
-            return this.inventory.getFluidStacks().get(0).getAmount();
-        } else {
-            return this.inventory.getItemStacks().get(0).getAmount();
-        }
-    }
-    */
-
   setTemperature(temp) {
     this.nuclearReactorComponent.setTemperature(temp);
   }
@@ -125,8 +105,6 @@ class NuclearHatch extends INuclearTile {
         meanNeutron += NuclearConstant.BASE_NEUTRON;
       }
 
-      // ItemStack stack = itemVariant.toStack((int) getVariantAmount());
-
       if (abs instanceof NuclearFuel) {
         const fuel = abs;
         neutronsProduced = fuel.simulateDesintegration(
@@ -137,20 +115,6 @@ class NuclearHatch extends INuclearTile {
       } else {
         abs.simulateAbsorption(meanNeutron);
       }
-
-      /*
-            if (abs.getRemainingDesintegrations(stack) == 0) {
-                try (Transaction tx = Transaction.openOuter()) {
-                    ConfigurableItemStack absStack = this.inventory.getItemStacks().get(0);
-
-                    if (abs.getNeutronProduct() != null) {
-                        // generate
-                        // abs.getNeutronProduct()
-                        // abs.getNeutronProductAmount()
-                    }
-                }
-            }
-            */
     }
 
     this.neutronHistory.addValue(NeutronHistoryComponentType.neutronGeneration, neutronsProduced);
@@ -227,35 +191,4 @@ class NuclearHatch extends INuclearTile {
       this.neutronHistory.addValue(NeutronHistoryComponentType.thermalNeutronFlux, neutronNumber);
     }
   }
-  /*
-
-    public static void registerItemApi(BlockEntityType<?> bet) {
-        MICapabilities.onEvent(event -> {
-            event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, bet,
-                    (be, direction) -> direction == UP ? ((NuclearHatch) be).getInventory().itemStorage.itemHandler : null);
-        });
-    }
-
-    public static void registerFluidApi(BlockEntityType<?> bet) {
-        MICapabilities.onEvent(event -> {
-            event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, bet,
-                    (be, direction) -> direction == UP ? ((NuclearHatch) be).getInventory().fluidStorage.fluidHandler : null);
-        });
-    }
-
-    @Override
-    public List<Component> getTooltips() {
-        if (isFluid) {
-            return List.of(new MITooltips.Line(MIText.MaxEuProductionSteam).arg(
-                    NuclearConstant.MAX_HATCH_EU_PRODUCTION,
-                    MITooltips.EU_PER_TICK_PARSER).arg(MIFluids.STEAM).build(),
-                    new MITooltips.Line(MIText.AcceptLowAndHighPressure).arg(Fluids.WATER).arg(MIFluids.HEAVY_WATER)
-                            .arg(MIFluids.HIGH_PRESSURE_WATER).arg(MIFluids.HIGH_PRESSURE_HEAVY_WATER).build());
-        } else {
-            return Collections.emptyList();
-        }
-    }
-
-}
-*/
 }
