@@ -1,80 +1,81 @@
 <!doctype html>
 <html>
-<head>
-  <title>Reactor Planner</title>
-  <meta charset="utf-8">
-  <link rel="stylesheet" href="styles.css" type="text/css">
+  <head>
+    <title>Reactor Planner</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="styles.css" type="text/css" />
 
-  <script src="common.js"></script>
-  <script src="reactorTiles.js"></script>
+    <script src="common.js"></script>
+    <script src="reactorTiles.js"></script>
 
-  <script src="nuclear/utils.js"></script>
+    <script src="nuclear/utils.js"></script>
 
-  <script src="nuclear/INeutronBehaviour.js"></script>
-  <script src="nuclear/NuclearConstant.js"></script>
+    <script src="nuclear/INeutronBehaviour.js"></script>
+    <script src="nuclear/NuclearConstant.js"></script>
 
-  <script src="nuclear/INuclearComponent.js"></script>
-  <script src="nuclear/FluidNuclearComponent.js"></script>
-  <script src="nuclear/NuclearComponentItem.js"></script>
-  <script src="nuclear/NuclearAbsorbable.js"></script>
+    <script src="nuclear/INuclearComponent.js"></script>
+    <script src="nuclear/FluidNuclearComponent.js"></script>
+    <script src="nuclear/NuclearComponentItem.js"></script>
+    <script src="nuclear/NuclearAbsorbable.js"></script>
 
-  <script src="nuclear/IsotopeFuelParams.js"></script>
-  <script src="nuclear/NuclearFuel.js"></script>
+    <script src="nuclear/IsotopeFuelParams.js"></script>
+    <script src="nuclear/NuclearFuel.js"></script>
 
-  <script src="nuclear/NuclearGridHelper.js"></script>
-  <script src="nuclear/NuclearGrid.js"></script>
+    <script src="nuclear/NuclearGridHelper.js"></script>
+    <script src="nuclear/NuclearGrid.js"></script>
 
-  <script src="nuclear/TemperatureComponent.js"></script>
-  <script src="nuclear/INuclearTileData.js"></script>
-  <script src="nuclear/INuclearTile.js"></script>
+    <script src="nuclear/TemperatureComponent.js"></script>
+    <script src="nuclear/INuclearTileData.js"></script>
+    <script src="nuclear/INuclearTile.js"></script>
 
-  <script src="nuclear/HistoryComponent.js"></script>
-</head>
-<body>
+    <script src="nuclear/HistoryComponent.js"></script>
+  </head>
+  <body>
+    <header class="main-header">
+      <h1>Reactor Planner</h1>
+    </header>
 
-<header class="main-header">
-  <h1>Reactor Planner</h1>
-</header>
+    <div class="main-wrapper" style="width: 900px">
+      <select name="sizes" class="simulator-options" id="reactor-size-select">
+        <option value="0">Small</option>
+        <option value="1">Medium</option>
+        <option value="2">Large</option>
+        <option value="3">Extreme</option>
+      </select>
+      <select name="overlay" class="simulator-options" id="reactor-overlay-select">
+        <option value="1">Temperature</option>
+        <option value="2">Neutron Absorbtion</option>
+        <option value="3">Neutron Flux</option>
+        <option value="4">Neutron Generation</option>
+        <option value="5">EU Generation</option>
+      </select>
+      <select name="simulatorSpeed" class="simulator-options" id="simulator-speed-select">
+        <option value="1">Speed 1x</option>
+        <option value="5">Speed 5x</option>
+        <option value="10">Speed 10x</option>
+        <option value="50">Speed 50x</option>
+      </select>
+      <select name="simulatorHistoryLength" class="simulator-options" id="simulator-history-select">
+        <option value="1200">History 1 min</option>
+        <option value="12000">History 10 min</option>
+        <option value="72000">History 1 h</option>
+        <option value="720000">History 10 h</option>
+      </select>
+      <button name="steamOutput" class="simulator-options" id="simulator-steam-output-toggle"></button>
+      <div id="tileUi">
+        <canvas id="reactor" class="tile-canvas"></canvas>
+        <canvas id="materials" class="tile-canvas"></canvas>
+        <canvas id="reactorStatistics" class="tile-canvas"></canvas>
+        <canvas id="reactorTooltip" class="tile-canvas"></canvas>
+      </div>
 
-<div class="main-wrapper" style="width: 900px">
-  <select name="sizes" class="simulator-options" id="reactor-size-select">
-    <option value="0">Small</option>
-    <option value="1">Medium</option>
-    <option value="2">Large</option>
-    <option value="3">Extreme</option>
-  </select>
-  <select name="overlay" class="simulator-options" id="reactor-overlay-select">
-    <option value="1">Temperature</option>
-    <option value="2">Neutron Absorbtion</option>
-    <option value="3">Neutron Flux</option>
-    <option value="4">Neutron Generation</option>
-    <option value="5">EU Generation</option>
-  </select>
-  <select name="simulatorSpeed" class="simulator-options" id="simulator-speed-select">
-    <option value="1">Speed 1x</option>
-    <option value="5">Speed 5x</option>
-    <option value="10">Speed 10x</option>
-    <option value="50">Speed 50x</option>
-  </select>
-  <select name="simulatorHistoryLength" class="simulator-options" id="simulator-history-select">
-    <option value="1200">History 1 min</option>
-    <option value="12000">History 10 min</option>
-    <option value="72000">History 1 h</option>
-    <option value="720000">History 10 h</option>
-  </select>
-  <button name="steamOutput" class="simulator-options" id="simulator-steam-output-toggle"></button>
-  <div id="tileUi">
-    <canvas id="reactor" class="tile-canvas"></canvas>
-    <canvas id="materials" class="tile-canvas"></canvas>
-    <canvas id="reactorStatistics" class="tile-canvas"></canvas>
-    <canvas id="reactorTooltip" class="tile-canvas"></canvas>
-  </div>
-
-  <footer class="main-footer">
-    <p>Source code and examples on <a href="https://github.com/warbaque/MI-Reactor-Planner/blob/main/README.md">the github repository</a>.</p>
-  </footer>
-
-</div><!-- main wrapper -->
-
-</body>
+      <footer class="main-footer">
+        <p>
+          Source code and examples on
+          <a href="https://github.com/warbaque/MI-Reactor-Planner/blob/main/README.md">the github repository</a>.
+        </p>
+      </footer>
+    </div>
+    <!-- main wrapper -->
+  </body>
 </html>
