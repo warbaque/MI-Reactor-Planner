@@ -89,12 +89,10 @@ let Game = {};
 Game.run = function () {
   this._previousElapsed = 0;
   let p = this.load();
-  Promise.all(p).then(
-    function (loaded) {
-      this.init();
-      window.requestAnimationFrame(this.tick);
-    }.bind(this)
-  );
+  Promise.all(p).then(async () => {
+    await this.init();
+    window.requestAnimationFrame(this.tick);
+  });
 };
 
 Game.tick = function (elapsed) {

@@ -88,6 +88,33 @@ const Overlay = Object.freeze({
   EU_GENERATION: 5,
 });
 
+const compress = async (str) => {
+  const byteArray = new TextEncoder().encode(str);
+  const cs = new CompressionStream("deflate");
+  const writer = cs.writable.getWriter();
+  writer.write(byteArray);
+  writer.close();
+  const arrayBuffer = new Response(cs.readable).arrayBuffer();
+  return new Uint8Array(await arrayBuffer);
+};
+
+const decompress = async (compressed) => {
+  const cs = new DecompressionStream("deflate");
+  const writer = cs.writable.getWriter();
+  writer.write(compressed);
+  writer.close();
+  const arrayBuffer = new Response(cs.readable).arrayBuffer();
+  return new TextDecoder().decode(await arrayBuffer);
+}
+
+const encode = (bytes) => {
+  return encodeURIComponent(btoa(String.fromCharCode(...bytes)));
+};
+
+const decode = (str) => {
+  return Uint8Array.from([...atob(decodeURIComponent(str))].map((c) => c.charCodeAt(0)));
+};
+
 TileMap = (i, tiles = null) => {
   let length = 5 + 2 * i;
 
@@ -111,11 +138,13 @@ TileMap = (i, tiles = null) => {
       }
     },
     updateState: function () {
-      window.history.pushState(
-        null,
-        null,
-        `?i=${i}&state=${btoa(JSON.stringify(this.tiles))}${Simulator.steamOutput === true ? "" : "&steam=off"}`
-      );
+      compress(JSON.stringify(this.tiles)).then((compressed) => {
+        window.history.pushState(
+          null,
+          null,
+          `?i=${i}&state=${encode(compressed)}${Simulator.steamOutput === true ? "" : "&steam=off"}`
+        );
+      });
     },
   };
 
@@ -234,7 +263,7 @@ Game.load = function () {
   ];
 };
 
-Game.init = function () {
+Game.init = async function () {
   this.material.tiles.forEach((tile) => {
     tile.image = Loader.getImage(tile.type);
   });
@@ -245,9 +274,16 @@ Game.init = function () {
   const steamParam = urlParams.get("steam");
 
   const sizeIndex = sizeIndexParam ? JSON.parse(sizeIndexParam) : 0;
-  const state = stateParam ? JSON.parse(atob(stateParam)) : null;
 
-  this.map = TileMap(sizeIndex, state);
+  try {
+    const state = stateParam ? JSON.parse(await decompress(decode(stateParam))) : null;
+    this.map = TileMap(sizeIndex, state);
+  } catch (e) {
+    console.warn("old state format fallback:", e);
+    const state = JSON.parse(atob(stateParam));
+    this.map = TileMap(sizeIndex, state);
+    this.map.updateState();
+  }
 
   this.colorbar = Loader.getImage("colorbar");
   this.warning = Loader.getImage("warning");
