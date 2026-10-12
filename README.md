@@ -10,6 +10,7 @@ Planner is deployed on github pages: https://warbaque.github.io/MI-Reactor-Plann
 
 | Power | Deuterium | Plutonium |  | *designed by* |
 |-------|-----------|-----------|--|---------------|
+| 170k EU/t | 189.6 mb/t | 5.4/min | [Link](https://warbaque.github.io/MI-Reactor-Planner/?i=3&state=eJyLzivNydGhmDA0R0H41JlC1ZhiV4tmEpJaTFMMdAyNQASmtQjNRiClRnjVIIzBYQ8mwupoU%2ByuJTOoSCFiAbPUiJ4%3D) | Reagilias |
 | 209k EU/t | 169.8 mb/t | 4.2/min | [Link](https://warbaque.github.io/MI-Reactor-Planner/?i=3&state=eJyLzivNydGhmDA0R0H41JlC1ZhiV4tmEpJarKbgtBhDOwE1lNiFZJgpdlPIDC5SiFgAoE6Jkg%3D%3D) | Coolcraftteam |
 | 204k EU/t | 163.9 mb/t | 4.0/min | [Link](https://warbaque.github.io/MI-Reactor-Planner/?i=3&state=eJyLzivNydGhmDA0R0EE1JnCCUy1aCZhNxVJOxyZYihBlaLcGPyeJOw10oOLFCIWAKBOiZI%3D) | prestig9110 |
 | 193k EU/t | 156.1 mb/t | 3.7/min | [Link](https://warbaque.github.io/MI-Reactor-Planner/?i=3&state=eJyLzivNydGhmDA0R0FEqTPFrhhDHoupGLKYZqHpxWkOdqNwmmOKzRicZlEcXqQQsQATDonF) | warbaque |
@@ -18,6 +19,7 @@ Planner is deployed on github pages: https://warbaque.github.io/MI-Reactor-Plann
 
 | Power | Tritium | Plutonium |  | *designed by* |
 |-------|---------|-----------|--|---------------|
+| 174k EU/t | 58.9 mb/t | 6.8/min | [Link](https://warbaque.github.io/MI-Reactor-Planner/?i=3&state=eJyLzivNydGhmDC0QEH41JlC1ZhiV4tmEpJaTFMMdAyNQASmtQjNRiClRnjVIIzBYQ8mwupoU%2ByuJTOoSCFiAeIKiNI%3D) | Reagilias |
 | 225k EU/t | 58.4 mb/t | 5.6/min | [Link](https://warbaque.github.io/MI-Reactor-Planner/?i=3&state=eJyLzivNydGhmDC0QEH41JlC1ZhiV4tmEpJarKbgtBhDOwE1lNiFZJgpdlPIDC5SiFgA1hiJzg%3D%3D) | Coolcraftteam |
 | 204k EU/t | 56.5 mb/t | 4.5/min | [Link](https://warbaque.github.io/MI-Reactor-Planner/?i=3&state=eJyLzivNydGhmDC0QEEE1JnCCUy1aCZhNxVJOxyZYiihnzlE%2Bo308CKFiAUASdyKAg%3D%3D) | warbaque |
 | 216k EU/t | 55.3 mb/t | 5.2/min | [Link](https://warbaque.github.io/MI-Reactor-Planner/?i=3&state=eJyLzivNydGhmDC0QEEE1JnCCUy1aCZhNxVJOxyZYihBlaLcGPyeJOw10oOLFCIWANYYic4%3D) | prestig9110 |
