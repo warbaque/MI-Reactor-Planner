@@ -27,14 +27,19 @@ Planner is deployed on github pages: https://warbaque.github.io/MI-Reactor-Plann
 
 **Plutonium**
 
-| Power | Size | D | T | Plutonium |  | *designed by* |
-|-------|------|---|---|-----------|--|---------------|
-| 47k EU/t | Extreme | 69.2mb/t | 14.6mb/t | 34.7/min | [Link](https://warbaque.github.io/MI-Reactor-Planner/?i=3&state=eJyLzivNydGhmDC00DE00jEBEUAmTmUGIAXIBB5jzLGbiGYAjEAowNANZZJgBBHOIMo7JIcPKUQsAL8shXE%3D) | warbaque |
-| 52k EU/t | Extreme | 121.1mb/t | | 32.8/min | [Link](https://warbaque.github.io/MI-Reactor-Planner/?i=3&state=eJyLzivNydGhmDA01zE00jEBEUAmTmUGIAXIBF5jsJqIZgCMQCjAohvMJMEIIpxBlHdIDh9SiFgAuECFaQ%3D%3D) | Reagilias |
-| 0 EU/t | Extreme | | | 20.5/min | [Link](https://warbaque.github.io/MI-Reactor-Planner/?i=3&state=eJyLzivNydGhmDDRMTSCETgVGYDkkQk8hmAzDk03jKCjAUR5g8RQIYWIBQCJKYL5) | Pink_Evil |
-| 0 EU/t | Large | | | 8.7/min | [Link](https://warbaque.github.io/MI-Reactor-Planner/?i=2&state=eJyLzivNydEhkzDRMTQCEjjlDUDyUAK7VgSBkELogRFEaSNkI%2FHOJkzEAgCEpmTt) | PurpleDino |
-| 0 EU/t | Medium | | | 3.5/min | [Link](https://warbaque.github.io/MI-Reactor-Planner/?i=1&state=eJyLzivNydEhljDQMTQCEmiiJiBRKIEQBauEEYQU4zEdLxELANlnP0A%3D) | PurpleDino |
-| 0 EU/t | Small | | | 1.3/min | [Link](https://warbaque.github.io/MI-Reactor-Planner/?i=0&state=eJyLzivNydHBSZjoGBoBCYQAkGsAIvAowULEAgAg8CMV) | PurpleDino |
+| Power | D | T | Plutonium |  | *designed by* |
+|-------|---|---|-----------|--|---------------|
+| 47k EU/t | 69.2mb/t | 14.6mb/t | 34.7/min | [Link](https://warbaque.github.io/MI-Reactor-Planner/?i=3&state=eJyLzivNydGhmDC00DE00jEBEUAmTmUGIAXIBB5jzLGbiGYAjEAowNANZZJgBBHOIMo7JIcPKUQsAL8shXE%3D) | warbaque |
+| 52k EU/t | 121.1mb/t | | 32.8/min | [Link](https://warbaque.github.io/MI-Reactor-Planner/?i=3&state=eJyLzivNydGhmDA01zE00jEBEUAmTmUGIAXIBF5jsJqIZgCMQCjAohvMJMEIIpxBlHdIDh9SiFgAuECFaQ%3D%3D) | Reagilias |
+| 0 EU/t | | | 20.5/min | [Link](https://warbaque.github.io/MI-Reactor-Planner/?i=3&state=eJyLzivNydGhmDDRMTSCETgVGYDkkQk8hmAzDk03jKCjAUR5g8RQIYWIBQCJKYL5) | Pink_Evil |
+
+**Plutonium** (starter)
+
+| Power | Size | Plutonium |  | *designed by* |
+|-------|------|-----------|--|---------------|
+| 0 EU/t | Large | 8.7/min | [Link](https://warbaque.github.io/MI-Reactor-Planner/?i=2&state=eJyLzivNydEhkzDRMTQCEjjlDUDyUAK7VgSBkELogRFEaSNkI%2FHOJkzEAgCEpmTt) | PurpleDino |
+| 0 EU/t | Medium | 3.5/min | [Link](https://warbaque.github.io/MI-Reactor-Planner/?i=1&state=eJyLzivNydEhljDQMTQCEmiiJiBRKIEQBauEEYQU4zEdLxELANlnP0A%3D) | PurpleDino |
+| 0 EU/t | Small | 1.3/min | [Link](https://warbaque.github.io/MI-Reactor-Planner/?i=0&state=eJyLzivNydHBSZjoGBoBCYQAkGsAIvAowULEAgAg8CMV) | PurpleDino |
 
 **Power** (without heat exchanger loop)
 
