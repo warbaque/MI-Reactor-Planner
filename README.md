@@ -36,20 +36,18 @@ Planner is deployed on github pages: https://warbaque.github.io/MI-Reactor-Plann
 | 0 EU/t | Medium | | | 3.5/min | [Link](https://warbaque.github.io/MI-Reactor-Planner/?i=1&state=eJyLzivNydEhljDQMTQCEmiiJiBRKIEQBauEEYQU4zEdLxELANlnP0A%3D) | PurpleDino |
 | 0 EU/t | Small | | | 1.3/min | [Link](https://warbaque.github.io/MI-Reactor-Planner/?i=0&state=eJyLzivNydHBSZjoGBoBCYQAkGsAIvAowULEAgAg8CMV) | PurpleDino |
 
-
-
-**Power**
-
-| Power | Deuterium | Tritium | Plutonium |  | *designed by* |
-|-------|-----------|---------|-----------|--|---------------|
-| 264k EU/t | 9.3 mb/t | 39.7 mb/t | 12.7/min | [Link](https://warbaque.github.io/MI-Reactor-Planner/?i=3&state=eJyLzivNydGhmDC00DHRMTQHERaEVFlAETa1qCqwqsOQh6lCMsUcWStcgzmJphB2C5G%2BIjWcSCFiAbpEh%2BQ%3D) | warbaque |
-
 **Power** (without heat exchanger loop)
 
 | Power | Deuterium | Plutonium |  | *designed by* |
 |-------|-----------|-----------|--|---------------|
 | 214k EU/t | 39.3 mb/t | 6.5/min | [Link](https://warbaque.github.io/MI-Reactor-Planner/?i=3&state=eJyLzivNydGhmDA01TGBEwRVQRA2tUgqTLArQ5eG8VDMwGIRVkPQbSLFIUT6iNQwIoWIBQB6AYaH) | warbaque |
 | 184k EU/t | 49.7 mb/t | 4.0/min | [Link](https://warbaque.github.io/MI-Reactor-Planner/?i=3&state=eJyLzivNydGhmDDRMTRFIJzKkBWZYFcMlzdGU42iBNU%2BYwyjsMliV4NuDYoS7NbgcjRZgUCV8I8FAGPaiEQ%3D) | warbaque |
+
+**Power**
+
+| Power | Deuterium | Tritium | Plutonium |  | *designed by* |
+|-------|-----------|---------|-----------|--|---------------|
+| 264k EU/t | 9.3 mb/t | 39.7 mb/t | 12.7/min | [Link](https://warbaque.github.io/MI-Reactor-Planner/?i=3&state=eJyLzivNydGhmDC00DHRMTQHERaEVFlAETa1qCqwqsOQh6lCMsUcWStcgzmJphB2C5G%2BIjWcSCFiAbpEh%2BQ%3D) | warbaque |
 
 **High efficiency**
 
