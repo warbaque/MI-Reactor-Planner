@@ -55,6 +55,7 @@ Planner is deployed on github pages: https://warbaque.github.io/MI-Reactor-Plann
 
 | Power | Efficiency | Deuterium | Tritium | Plutonium |  | *designed by* |
 |-------|------------|-----------|---------|-----------|--|---------------|
+| 60k EU/t | 95% | 7.2 mb/t | 0 mb/t | 0.3/min | [Link](https://warbaque.github.io/MI-Reactor-Planner/?i=3&state=eJyLzivNydGhmDA0RkF41ZmjIgzVEDVGOkamMAJdGVSFKcIUKBuLIiQ1lJmD2zlE%2B4z08CKFiAUAn%2FuJRQ%3D%3D) | Samy |
 | 54k EU/t | 85% | 23.3 mb/t | 0 mb/t | 0.4/min | [Link](https://warbaque.github.io/MI-Reactor-Planner/?i=3&state=eJyLzivNydGhmDA0RkF41ZmjIgzVKGpMcKhEUWSEX5EJSIURWJkJRQbhdxLRHiQ92EghYgHEGYqn) | Aerosfilis |
 | 105k EU/t | 60% | 25.3 mb/t | 0 mb/t | 1.0/min | [Link](https://warbaque.github.io/MI-Reactor-Planner/?i=3&state=eJyLzivNydGhmDA0RkF41ZmiIgzVKGqMdIywKYSoMcJrGNQcIxTTcChCQnjUGKGaht%2FlONSQHmakELEAKMmJxw%3D%3D) | warbaque |
 
